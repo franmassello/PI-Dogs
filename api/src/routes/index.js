@@ -58,15 +58,17 @@ router.get('/dogs', async(req,res) =>{
 router.get('/temperament', async(req,res) =>{
     const temperamentApi = await axios.get('https://api.thedogapi.com/v1/breeds')
     const temperaments = temperamentApi.data.map(el => el.temperament)
-    const tempEach = temperaments.map(el => {
-        //console.log(typeof el) // es una string
-        el = [el]
-        for(let i=0; i < el.length; i++) return el[i]})
-        //console.log(tempEach)
-    tempEach.forEach(el => {
+    /* const tempEach = temperaments.map(el => {
+        for(let i=0; i < el.length; i++) return el[i]
+    }) */
+    //console.log(temperaments)
+    temperaments.forEach(el => {
+        console.log(el)
+        if(el){
         Temperamentos.findOrCreate({
-            where: { name: el }
-        })
+            where: { name: el },
+            })
+        }
     })
         const allTemperaments = await Temperamentos.findAll()
         res.send(allTemperaments)
