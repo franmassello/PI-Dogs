@@ -1,4 +1,0 @@
-// Cree la .env
-// Cree la DB
-// Cree los modelos Dog y Temperamentos en /api
-// Cree las relaciones de Razas y Temperamentos
