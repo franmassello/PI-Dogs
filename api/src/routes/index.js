@@ -2,27 +2,31 @@ const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
-const { Razas , Temperamentos } = require ('../db')
+const { Razas , Temperamentos } = require ('../db');
+const { combineTableNames } = require('sequelize'); // sequelize/types/lib/utils
+const { noExtendLeft } = require('sequelize'); // /types/lib/operators
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+
+
 const getApiInfo = async()=>{
     const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds')
     const apiInfo = await apiUrl.data.map(el => {
         return {
+            id: el.id,
             name: el.name,
             img: el.image,
-            height: el.height,
-            weight: el.weight,
+            height: el.height.metric,
+            weight: el.weight.metric,
             lifespan: el.life_span,
-            temperament: el.temperament
+            temperament: el.temperament?.split(", ")
         };
     });
     return apiInfo
 }
-
 const getDbInfo = async () => {
     return await Razas.findAll({
         include: {
@@ -34,13 +38,34 @@ const getDbInfo = async () => {
         }
     })
 }
-
 const getAllDogs = async () => {
-    const apiInfo = await getApiInfo();
-    const dbInfo = await getDbInfo();
-    const infoTotal = apiInfo.concat(dbInfo)
+    let apiInfo = await getApiInfo();
+    let dbInfo = await getDbInfo();
+    let infoTotal = apiInfo.concat(dbInfo)
     return infoTotal
 }
+
+const chargeTempApiToDb = async () => {
+    let allData = await getApiInfo();
+    let alltemps = [];
+    allData.map((el) => {
+      let elTemp = el.temperament;
+      if(elTemp !== undefined){
+      for (let i = 0; i < elTemp.length; i++) {
+        let tem = el.temperament[i];
+        if (!alltemps.includes(tem)) {
+          alltemps.push(tem);
+        }}
+      }
+    });
+    alltemps.forEach((temp) => {
+      Temperamentos.findOrCreate({
+        where: { name: temp },
+      });
+    });
+  };
+
+chargeTempApiToDb()
 
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name
@@ -56,58 +81,30 @@ router.get('/dogs', async(req,res) =>{
 })
 
 router.get('/temperament', async(req,res) =>{
-    const temperamentApi = await axios.get('https://api.thedogapi.com/v1/breeds')
-    const temperaments = temperamentApi.data.map(el => el.temperament)
-    /* const tempEach = temperaments.map(el => {
-        for(let i=0; i < el.length; i++) return el[i]
-    }) */
-    //console.log(temperaments)
-    temperaments.forEach(el => {
-        console.log(el)
-        if(el){
-        Temperamentos.findOrCreate({
-            where: { name: el },
-            })
-        }
-    })
-        const allTemperaments = await Temperamentos.findAll()
-        res.send(allTemperaments)
-    
+    chargeTempApiToDb()
+    const allTemperaments = await Temperamentos.findAll()
+    res.send(allTemperaments)
 })
 
-
-
-router.post('/dogs', async(req,res) =>{
-    let {
-        name,
-        img,
-        height,
-        weight,
-        lifespan,
-        temperament,
-        createdInDb,
-    } = req.body
-
-    let dogCreated = await Razas.create({
-        name,
-        img,
-        height,
-        weight,
-        lifespan,
-        createdInDb
-    })
-
-    let temperamentDb = await Temperamentos.findAll({
-        where: { name: temperament}
-    })
-    dogCreated.addTemperament(temperamentDb)
-    res.send('Raza creada!')
+router.post('/dogs', async(req,res, next) =>{
+    const datos = req.body
+    Razas.create(datos)
+        .then(datos => res.send(datos))
+        .catch(error => next(error))
 })
 
-/* router.get('/dogs/:idRaza', async(req,res) =>{
+router.get('/dogs/:idRaza', async(req,res) =>{
+    const id = req.params.idRaza
+    let razasTotal = await getAllDogs()
+    //console.log(razasTotal)
+    if(id){
+        let dogId = await razasTotal.filter(el => el.id.toString() === id.toString()) //Antes estaba como parseInt
+        dogId.length?
+        res.status(200).send(dogId) :
+        res.status(404).send('No se ha encontrado el perro!')
+    }
+}) 
 
-}) */
-
-
+module.exports = chargeTempApiToDb;
 module.exports = router;
 
