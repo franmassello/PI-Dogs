@@ -1,5 +1,5 @@
 const initialState = {
-    dogs = []
+    dogs : []
 }
 
 function rootReducer(state= initialState, action){
@@ -7,11 +7,11 @@ function rootReducer(state= initialState, action){
         case 'GET_DOGS':
             return{
                 ...state,
-                characters: action.payload
+                dogs: action.payload
             }
     
         default:
-            break;
+            return state;
     }
 }
 
