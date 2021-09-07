@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //import { DOGS_URL } from "../../constants"
-import { getDogs } from "../../store/actions/dogActions";
+import { getDogs } from "../../actions/dogActions";
 
 export default function DogCards() {
   const dispatch = useDispatch();

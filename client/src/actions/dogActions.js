@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DOGS_URL } from '../../constants'
+import { DOGS_URL } from '../constants'
 export const GET_DOGS = 'GET_ DOGS'
 
 export function getDogs(){
