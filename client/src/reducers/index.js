@@ -1,4 +1,4 @@
-import { GET_DOGS, GET_DOGS_BREED } from '../actions/dogActions'
+import { GET_DOGS, GET_DOGS_BREED, SORT_BREEDS } from '../actions/dogActions'
 let initialState = {
     dogs: [],
 };
@@ -12,11 +12,14 @@ export default function reducer (state = initialState, action) {
                 dogs: payload
             }
         case GET_DOGS_BREED:
-            const allDogs = state.dogs
-            const statusFiltered = action.payload === 'Temperament' ? allDogs : allDogs.filter(el => el.temperament === action.payload)
             return {
                 ...state,
-                characters: statusFiltered
+                dogs: action.payload
+            }
+        case SORT_BREEDS:
+            return {
+                ...state,
+                dogs : action.payload
             }
         default:
             return state
