@@ -1,4 +1,4 @@
-import { GET_DOGS, GET_DOGS_BREED, SORT_BREEDS } from '../actions/dogActions'
+import { GET_DOGS, GET_DOGS_BREED } from '../actions/dogActions'
 let initialState = {
     dogs: [],
 };
@@ -16,10 +16,33 @@ export default function reducer (state = initialState, action) {
                 ...state,
                 dogs: action.payload
             }
-        case SORT_BREEDS:
+        case "ordenar-liviano-pesado":
             return {
                 ...state,
-                dogs : action.payload
+                dogs: state.dogs.sort((a,b) => parseInt(a.weight.metric.slice(0, 3)) - parseInt(b.weight.metric.slice(0, 3))) 
+            };
+        case "ordenar-pesado-liviano":
+            return {
+                ...state,
+                dogs: state.dogs.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3)))
+            };
+        case "ordenar-asc-desc":
+            return {
+                ...state,
+                dogs: state.dogs.sort(function(a, b){
+                    if(a.name < b.name) { return -1; }
+                    if(a.name > b.name) { return 1; }
+                    return 0;
+                })
+            }
+        case "ordenar-desc-asc":
+            return {
+                ...state,
+                dogs: state.dogs.sort(function(a, b){
+                    if(a.name > b.name) { return -1; }
+                    if(a.name < b.name) { return 1; }
+                    return 0;
+                })
             }
         default:
             return state
