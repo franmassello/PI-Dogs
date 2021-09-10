@@ -19,12 +19,12 @@ export default function reducer (state = initialState, action) {
         case "ordenar-liviano-pesado":
             return {
                 ...state,
-                dogs: state.dogs.sort((a,b) => parseInt(a.weight.metric.slice(0, 3)) - parseInt(b.weight.metric.slice(0, 3))) 
+                dogs: state.dogs.sort((a,b) => parseInt(a.weight.slice(0, 3)) - parseInt(b.weight.slice(0, 3))) 
             };
         case "ordenar-pesado-liviano":
             return {
                 ...state,
-                dogs: state.dogs.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3)))
+                dogs: state.dogs.sort((a,b) => parseInt(b.weight.slice(0, 3)) - parseInt(a.weight.slice(0, 3)))
             };
         case "ordenar-asc-desc":
             return {
