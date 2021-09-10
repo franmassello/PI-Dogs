@@ -11,6 +11,11 @@ export default function Home() {
     const allDogs = useSelector((state) => state.dogs);
     const [ currentPage, setCurrentPage] = useState(1)
     const [ dogsPerPage, setDogsPerPage ] = useState(8)
+
+    const [orderAlfabet, setOrderAlfabet] = useState("")
+    const [peso, setPeso] = useState("")
+
+
     const indexOfLastDog = currentPage * dogsPerPage // pos es 8
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
@@ -45,6 +50,35 @@ export default function Home() {
         dispatch(getDogsBreed(e.target.value))
     }
      */
+
+    const alfabetSelectedChange = (e) => {
+        if(e.target.value === "asc-desc") {
+            dispatch({
+                type: "ordenar-asc-desc"
+            })
+        }
+        else if (e.target.value === "desc-asc") {
+            dispatch ({
+                type: "ordenar-desc-asc"
+            })
+        }
+        setOrderAlfabet(e.target.value)
+    }
+
+    const pesoSelectedChange = (e) => {
+        if (e.target.value === "liviano-pesado") {
+            dispatch({
+                type: "ordenar-liviano-pesado",
+              });
+        }
+        else if (e.target.value === "pesado-liviano") {
+            dispatch({
+                type: "ordenar-pesado-liviano",
+              });
+        }
+        setPeso(e.target.value)
+    }
+
     return (
         <div>
         <Link to="/dogs">Crear Perro</Link>
@@ -54,19 +88,26 @@ export default function Home() {
         </button>
 
         <div>
-
             <select>
-            <option value="asc">Temperamento</option>
+            <option value="asc">Temperamento Checkbox</option>
             </select>
 
-            <select onChange={(e)=>{handleChangeAscDesc(e)}}>
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
+            <p className= "p-select">Ordenar alfabeticamente:</p>
+            <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
+                <option value= "asc-desc">Ascendente a descendente</option>
+                <option value= "desc-asc">Descendente a ascendente</option>
             </select>
 
-            <select>
-            <option value="peso">Peso</option>
+            <p className= "p-select">Ordenar por peso:</p>
+            <select value= {peso} onChange= {pesoSelectedChange}>
+                <option value="liviano-pesado">Más liviano a más pesado</option>
+                <option value="pesado-liviano">Más pesado a más liviano</option>
             </select>
+
+            {/* <select onChange={(e)=>{handleChangeAscDesc(e)}}>
+                <option value="asc">Ascendiente</option>
+                <option value="desc">Descendiente</option>
+            </select> */}
             
             <div>
             <SearchBar/>
