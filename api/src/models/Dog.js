@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     weight:{
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     image:{

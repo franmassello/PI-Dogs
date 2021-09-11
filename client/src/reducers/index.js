@@ -1,6 +1,9 @@
 import { GET_DOGS, GET_DOGS_BREED } from '../actions/dogActions'
 let initialState = {
     dogs: [],
+    allDogs: [],
+    detail: [],
+    temperaments: []
 };
 
 export default function reducer (state = initialState, action) {
@@ -9,13 +12,32 @@ export default function reducer (state = initialState, action) {
         case GET_DOGS:
             return {
                 ...state,
-                dogs: payload
+                dogs: payload,
+                allDogs: action.payload
             }
         case GET_DOGS_BREED:
             return {
                 ...state,
                 dogs: action.payload
             }
+        case "FILTER_CREATED":
+            const createdFilter = action.payload === 'created' ? state.allDogs.filter( el => el.createdInDb) : state.allDogs.filter( el => !el.createdInDb)
+            return {
+                ...state,
+                dogs: action.payload === 'All' ? state.allDogs : createdFilter
+            }
+
+        case "POST_DOG":
+            return {
+                ...state, 
+            }
+
+        case "GET_TEMPERAMENTS":
+            return {
+                ...state,
+                temperaments: action.payload
+            }
+
         case "ordenar-liviano-pesado":
             return {
                 ...state,
@@ -43,6 +65,16 @@ export default function reducer (state = initialState, action) {
                     if(a.name < b.name) { return 1; }
                     return 0;
                 })
+            }
+        case "TEMPERAMENTOS": 
+            return {
+                ...state,
+                temperaments: action.payload
+                };
+        case "GET_DETAILS":
+            return {
+                ...state,
+                detail: action.payload
             }
         default:
             return state

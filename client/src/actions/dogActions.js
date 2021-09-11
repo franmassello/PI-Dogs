@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DOGS_URL, GETDOGS_URL } from '../constants'
+import { DOGS_URL, GETDOGS_URL, POSTDOG_URL, GETTEMPERAMENT_URL } from '../constants'
 export const GET_DOGS = 'GET_ DOGS'
 export const GET_DOGS_BREED = 'GET_DOGS_BREED'
 export const SORT_BREEDS = 'SORT_BREEDS'
@@ -7,10 +7,10 @@ export const ASD = 'Razas-A-Z';
 export const DES = 'Razas-Z-A';
 
 
-
 function setFirstLetterToCap(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 
 export function getDogs(){
     return async (dispatch) => {
@@ -20,6 +20,21 @@ export function getDogs(){
            payload: allDOGS.data
        } 
        return dispatch(action)     
+    }
+}
+
+export function postDog(payload){
+    return async function (dispatch){
+        const response = await axios.post(POSTDOG_URL,payload)
+        console.log(response)
+        return response
+    }
+}
+
+export function filterCreated(payload){
+    return {
+        type: "FILTER_CREATED",
+        payload
     }
 }
 
@@ -36,6 +51,21 @@ export function getDogsBreed(name){
         }
     }
 }
+
+export function getTemperaments(){
+    return async function (dispatch){
+        try {
+            var json = await axios.get(GETTEMPERAMENT_URL)
+            return dispatch({
+                type: "GET_TEMPERAMENTS",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export function sortBreeds(orden, razas){
     let razaSort = [...razas]
 
@@ -67,3 +97,16 @@ export function sortBreeds(orden, razas){
     }
 }
 
+export function getDetail(id) {
+    return async function(dispatch){
+        try{
+            var json = await axios.get(DOGS_URL+id)
+            return dispatch({
+                type: 'GET_DETAILS',
+                payload: json.data
+            })
+        }catch(error){
+            console.log(error)
+        }
+    } 
+}

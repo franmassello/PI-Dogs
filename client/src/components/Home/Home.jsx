@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getDogs, getDogsBreed, sortBreeds } from "../../actions/dogActions";
+import { getDogs, sortBreeds, filterCreated } from "../../actions/dogActions";
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
+import axios from "axios"
+import { DOGS_URL_3000 } from "../../constants";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -15,12 +17,14 @@ export default function Home() {
     const [orderAlfabet, setOrderAlfabet] = useState("")
     const [peso, setPeso] = useState("")
 
-
     const indexOfLastDog = currentPage * dogsPerPage // pos es 8
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
 
     const [ searchTerm, setSearchTerm] = useState('')
+
+    const temperaments = useSelector((state) => state.temperaments);
+    const [temperamentSelected, setTemperamentSelected] = useState("")
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -29,8 +33,20 @@ export default function Home() {
     useEffect(() => {
         dispatch(getDogs());
     }, []);
-    
 
+    useEffect(() => {
+        axios.get(`http://localhost:3001/temperament`) 
+        .then((res) => {
+            dispatch ({
+                type: "TEMPERAMENTOS",
+                payload: res.data
+            })
+        })
+        .catch((error) => {
+        console.log(error);
+    });        
+    }, [])
+    
     function handleClick(e) {
         e.preventDefault();
         dispatch(getDogs());
@@ -39,17 +55,8 @@ export default function Home() {
     function handleChangeAscDesc(e){
         e.preventDefault()
         let valorOrden = e.target.value
-
         dispatch(sortBreeds(valorOrden, allDogs))
-        //console.log(dispatch(sortBreeds(e.target.value, allDogs)))
-        //console.log(e.target.value) 
-        //console.log(allDogs) // es el arreglo de todos los perros
-        //console.log(allDogs[1].name) // Afhgan hound
     }
-  /*   function handleFilterBreed(e){
-        dispatch(getDogsBreed(e.target.value))
-    }
-     */
 
     const alfabetSelectedChange = (e) => {
         if(e.target.value === "asc-desc") {
@@ -79,6 +86,15 @@ export default function Home() {
         setPeso(e.target.value)
     }
 
+    const temperamentChange = (e) => {
+        let temperament = e.target.value
+        setTemperamentSelected(temperament)
+    }
+
+    function handleFilterCreated(e){
+        dispatch(filterCreated(e.target.value))
+    }
+
     return (
         <div>
         <Link to="/dogs">Crear Perro</Link>
@@ -88,26 +104,35 @@ export default function Home() {
         </button>
 
         <div>
-            <select>
-            <option value="asc">Temperamento Checkbox</option>
-            </select>
+            <a className= "p-select">Temperamentos: </a>
+            <div className= "select-container">
+                <p>Filtrar por temperamento:</p>
+                <select onChange={temperamentChange} >
+                    <option value={''} >Seleccionar filtro</option>                               
+                    {temperaments.map((el) => (
+                    <option value={el.name}>{el.name}</option>                               
+                    ))}
+                </select>
+            </div>
 
-            <p className= "p-select">Ordenar alfabeticamente:</p>
+            <a className= "p-select">Ordenar alfabeticamente:</a>
             <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
                 <option value= "asc-desc">Ascendente a descendente</option>
                 <option value= "desc-asc">Descendente a ascendente</option>
             </select>
 
-            <p className= "p-select">Ordenar por peso:</p>
+            <a className= "p-select">Ordenar por peso:</a>
             <select value= {peso} onChange= {pesoSelectedChange}>
                 <option value="liviano-pesado">Más liviano a más pesado</option>
                 <option value="pesado-liviano">Más pesado a más liviano</option>
             </select>
 
-            {/* <select onChange={(e)=>{handleChangeAscDesc(e)}}>
-                <option value="asc">Ascendiente</option>
-                <option value="desc">Descendiente</option>
-            </select> */}
+            <a className= "p-select">Ordenar por creado:</a>
+            <select onChange= {e =>handleFilterCreated(e)}>
+                <option value="All">Todos</option>
+                <option value="created">Creados</option>
+                <option value="api">Existentes</option>
+            </select>
             
             <div>
             <SearchBar/>
@@ -131,12 +156,17 @@ export default function Home() {
                     <p>Raza: {dog.name}</p>
                     <p>Temperamentos: {dog.temperament?.map((temp)=>{return temp + ' '})}</p>    
                     <p>Peso: {dog.weight}</p>
+                    
                     <img
-                        src={dog.img.url}
+                        src={dog.img}
                         width="450px"
                         height="250px"
                         alt="IMG NOT FOUND"
                     />
+                    <form action={DOGS_URL_3000+dog.id}>
+                        <input type='submit' value='Detalles'/>
+                    </form>
+                    
                 </div>
                 );
             })}
