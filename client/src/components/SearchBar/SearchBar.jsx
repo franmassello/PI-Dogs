@@ -20,6 +20,7 @@ export default function SearchBar(){
 
     return (
         <div>
+            <a>Buscar por nombre: </a>
             <input 
             type = 'text'
             placeholder = 'Buscar...'
