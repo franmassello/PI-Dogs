@@ -140,7 +140,7 @@ export default function CreateDog(){
                     <label>Temperament: </label>
                     <input
                         input= 'text'
-                        value= {input.temperament}
+                        value= {input.temperaments}
                         name= 'temperament'
                     />
                 </div>

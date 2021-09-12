@@ -197,7 +197,7 @@ export default function Home() {
                     <p>Peso: {dog.weight}</p>
                     
                     <img
-                        src={dog.img}
+                        src={dog.img ? dog.img : dog.image}
                         width="450px"
                         height="250px"
                         alt="IMG NOT FOUND"
