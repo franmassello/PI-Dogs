@@ -2,7 +2,7 @@ const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
-const { Razas , Temperamentos } = require ('../db');
+const { Razas , Temperament } = require ('../db');
 const { combineTableNames } = require('sequelize'); // sequelize/types/lib/utils
 const { noExtendLeft } = require('sequelize'); // /types/lib/operators
 const router = Router();
@@ -28,7 +28,7 @@ const getApiInfo = async()=>{
 const getDbInfo = async () => {
     return await Razas.findAll({
         include: {
-            model: Temperamentos,
+            model: Temperament,
             attributes: ['name'],
             through: {
                 attributes: [],
@@ -57,7 +57,7 @@ const chargeTempApiToDb = async () => {
       }
     });
     alltemps.forEach((temp) => {
-      Temperamentos.findOrCreate({
+      Temperament.findOrCreate({
         where: { name: temp },
       });
     });
@@ -80,7 +80,7 @@ router.get('/dogs', async(req,res) =>{
 
 router.get('/temperament', async(req,res) =>{
     chargeTempApiToDb()
-    const allTemperaments = await Temperamentos.findAll()
+    const allTemperaments = await Temperament.findAll()
     res.send(allTemperaments)
 })
 
