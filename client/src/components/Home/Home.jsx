@@ -21,6 +21,15 @@ export default function Home() {
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
 
+    const [ input, setInput] = useState({
+        name: '',
+        height: '',
+        weight: '',
+        image: '',
+        lifespan: '',
+        temperament:[]
+    })
+
     const [ searchTerm, setSearchTerm] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
@@ -95,6 +104,22 @@ export default function Home() {
         dispatch(filterCreated(e.target.value))
     }
 
+    function handleSelect(e) {
+        setInput({
+            ...input,
+            temperament: [...input.temperament, e.target.value]
+        })
+    }
+
+    function handleDelete(el){
+        setInput({
+            ...input,
+            temperament: input.temperament.filter( temp => temp !== el)
+        })
+    }
+
+
+
     return (
         <div>
         <Link to="/dogs">Crear Perro</Link>
@@ -104,15 +129,29 @@ export default function Home() {
         </button>
 
         <div>
-            <a className= "p-select">Temperamentos: </a>
             <div className= "select-container">
-                <p>Filtrar por temperamento:</p>
-                <select onChange={temperamentChange} >
-                    <option value={''} >Seleccionar filtro</option>                               
-                    {temperaments.map((el) => (
-                    <option value={el.name}>{el.name}</option>                               
-                    ))}
-                </select>
+                <div>
+                    <label>Temperamentos: </label>
+                    <select onChange={handleSelect}>
+                        {temperaments?.map((temp) => (
+                            <option value={temp.name}>{temp.name}</option>
+                            ))}
+                    </select>
+                    <input
+                        input= 'text'
+                        value= {input.temperament}
+                        name= 'temperament'
+                        size='70'
+                    />
+                    <button>Buscar</button>
+                    {input.temperament.map(el =>
+                    <div className='divTemp'>
+                        {/* <p>{el}</p> */}
+                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
+                    </div>
+                    )
+                }
+                </div>
             </div>
 
             <a className= "p-select">Ordenar alfabeticamente:</a>
