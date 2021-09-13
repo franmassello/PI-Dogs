@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {postDog, getTemperaments} from '../../actions/dogActions'; // Falta el get temperaments
 import { useDispatch, useSelector } from "react-redux"
 
+
 function validate(input){
     let errors = {}
     if(!input.name){
@@ -15,11 +16,24 @@ function validate(input){
     return errors
 }
 
+
 export default function CreateDog(){
     const dispatch = useDispatch()
     const history = useHistory()
     const temperaments = useSelector((state) => state.temperaments)
     const [errors,setErrors] = useState({})
+
+    const tempFiltersToApply = (allTempFilter) => {
+        let filtersTrue = [];
+        for (let i = 0; i < temperaments.length; i++) {
+          let nameTemp = temperaments[i].name
+          let idTemp = temperaments[i].id
+          if(allTempFilter.includes(nameTemp)){
+            filtersTrue.push(idTemp)
+          }
+        }
+        return filtersTrue;
+      };
 
     const [ input, setInput] = useState({
         name: '',
@@ -27,7 +41,7 @@ export default function CreateDog(){
         weight: '',
         image: '',
         lifespan: '',
-        temperament:[]
+        temperaments:[]
     })
 
     function handleChange(e) {
@@ -39,21 +53,26 @@ export default function CreateDog(){
             ...input,
             [e.target.name]: e.target.value
         }))
-        console.log(input)
+        //console.log(input)
 
     }
 
     function handleSelect(e) {
+        //let objeto = {id: e.target.value, name: e.target.name}
         setInput({
             ...input,
-            temperament: [...input.temperament, e.target.value]
+            temperaments: [...input.temperaments, e.target.value]
         })
     }
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log(input)
-        dispatch(postDog(input))
+        let temps = tempFiltersToApply(input.temperaments)
+        let newDog = {
+            ...input,
+            temperaments: temps
+        }
+        dispatch(postDog(newDog))
         alert('Perro Creado!')
         setInput({
             name: '',
@@ -61,7 +80,7 @@ export default function CreateDog(){
             weight: '',
             image: '',
             lifespan: '',
-            temperament:[]
+            temperaments:[]
         })
         history.push('/home')
     }
@@ -69,7 +88,7 @@ export default function CreateDog(){
     function handleDelete(el){
         setInput({
             ...input,
-            temperament: input.temperament.filter( temp => temp !== el)
+            temperaments: input.temperaments.filter( temp => temp !== el)
         })
     }
 
@@ -141,26 +160,27 @@ export default function CreateDog(){
                     <input
                         input= 'text'
                         value= {input.temperaments}
-                        name= 'temperament'
+                        name= 'temperaments'
                     />
                 </div>
                 <select onChange={handleSelect}>
-                    {temperaments.map((temp) => (
-                        <option value={temp.name}>{temp.name}</option>
+                    {
+                    temperaments.map((temp) => (
+                        <option value={temp.name} name={temp.name}>{temp.name}</option>
                         ))}
                 </select>
 
                 <button type='submit'> Crear Raza</button>
-                
-                {input.temperament.map(el =>
+            </form>
+                {input.temperaments.map(el =>
                     <div className='divTemp'>
-                        <p>{el}</p>
+                        <p>{el.name}</p>
                         <button className='botonX' onClick={()=> handleDelete(el)}>x</button>
                     </div>
                     )
                 }
 
-            </form>
+            
         </div>
     )
 

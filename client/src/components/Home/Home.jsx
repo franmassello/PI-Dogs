@@ -7,6 +7,8 @@ import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
 import { DOGS_URL_3000 } from "../../constants";
+import styles from './Home.module.css'
+
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -65,7 +67,7 @@ export default function Home() {
         e.preventDefault()
         let valorOrden = e.target.value
         dispatch(sortBreeds(valorOrden, allDogs))
-    }
+    } 
 
     const alfabetSelectedChange = (e) => {
         if(e.target.value === "asc-desc") {
@@ -98,7 +100,7 @@ export default function Home() {
     const temperamentChange = (e) => {
         let temperament = e.target.value
         setTemperamentSelected(temperament)
-    }
+    } 
 
     function handleFilterCreated(e){
         dispatch(filterCreated(e.target.value))
@@ -118,9 +120,13 @@ export default function Home() {
         })
     }
 
+    function handleSearchTemperaments(input){
+        axios.get()
+    }
 
 
     return (
+        <div>
         <div>
         <Link to="/dogs">Crear Perro</Link>
         <h1>DogsApp</h1>
@@ -146,7 +152,6 @@ export default function Home() {
                     <button>Buscar</button>
                     {input.temperament.map(el =>
                     <div className='divTemp'>
-                        {/* <p>{el}</p> */}
                         <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
                     </div>
                     )
@@ -212,5 +217,7 @@ export default function Home() {
             </div>
         </div>
         </div>
+        </div>
     );
+    
     }
