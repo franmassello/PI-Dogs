@@ -53,7 +53,6 @@ export default function CreateDog(){
             ...input,
             [e.target.name]: e.target.value
         }))
-        //console.log(input)
 
     }
 
@@ -161,24 +160,30 @@ export default function CreateDog(){
                         input= 'text'
                         value= {input.temperaments}
                         name= 'temperaments'
+                        size='70'
                     />
-                </div>
+                
                 <select onChange={handleSelect}>
                     {
                     temperaments.map((temp) => (
                         <option value={temp.name} name={temp.name}>{temp.name}</option>
                         ))}
                 </select>
-
-                <button type='submit'> Crear Raza</button>
-            </form>
+                </div>
                 {input.temperaments.map(el =>
                     <div className='divTemp'>
-                        <p>{el.name}</p>
-                        <button className='botonX' onClick={()=> handleDelete(el)}>x</button>
+                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
                     </div>
                     )
                 }
+                <button type='submit'> Crear Raza</button>
+            </form>
+                {/* {input.temperaments.map(el =>
+                    <div className='divTemp'>
+                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
+                    </div>
+                    )
+                } */}
 
             
         </div>
