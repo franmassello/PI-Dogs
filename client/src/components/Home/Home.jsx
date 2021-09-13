@@ -1,13 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import { getDogs, sortBreeds, filterCreated } from "../../actions/dogActions";
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
 import { DOGS_URL_3000 } from "../../constants";
-import styles from './Home.module.css'
+import './Home.css'
 
 
 export default function Home() {
@@ -126,96 +126,96 @@ export default function Home() {
 
 
     return (
-        <div>
-        <div>
-        <h1>DogsApp</h1>
-        <button onClick={(e) => {handleClick(e);}}>
-            Recargar los personajes
-        </button>
+        <div >
+            <h1>DogsApp</h1>
+            <button onClick={(e) => {handleClick(e);}}>
+                Recargar los personajes
+            </button>
 
-        <div>
-            <div className= "select-container">
-                <div>
-                    <label>Temperamentos: </label>
-                    <select onChange={handleSelect}>
-                        {temperaments?.map((temp) => (
-                            <option value={temp.name}>{temp.name}</option>
-                            ))}
-                    </select>
-                    <input
-                        input= 'text'
-                        value= {input.temperament}
-                        name= 'temperament'
-                        size='70'
-                    />
-                    <button>Buscar</button>
-                    {input.temperament.map(el =>
-                    <div className='divTemp'>
-                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
-                    </div>
-                    )
-                }
-                </div>
-            </div>
-
-            <a className= "p-select">Ordenar alfabeticamente:</a>
-            <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
-                <option value= "asc-desc">Ascendente a descendente</option>
-                <option value= "desc-asc">Descendente a ascendente</option>
-            </select>
-
-            <a className= "p-select">Ordenar por peso:</a>
-            <select value= {peso} onChange= {pesoSelectedChange}>
-                <option value="liviano-pesado">Más liviano a más pesado</option>
-                <option value="pesado-liviano">Más pesado a más liviano</option>
-            </select>
-
-            <a className= "p-select">Ordenar por creado:</a>
-            <select onChange= {e =>handleFilterCreated(e)}>
-                <option value="All">Todos</option>
-                <option value="created">Creados</option>
-                <option value="api">Existentes</option>
-            </select>
-            
             <div>
-            <SearchBar/>
-            <Paginado
-            dogsPerPage= {dogsPerPage}
-            allDogs = {allDogs.length}
-            paginado = {paginado}
-            />
-            
-            
-            {currentDogs.filter((dog) => {
-                if(searchTerm == ''){
-                    return dog
-                } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
-                    return dog
-                }
-            }
-                ).map((dog) => { // antes estaba alldogs.map
-                return (
-                <div>
-                    <p>Raza: {dog.name}</p>
-                    <p>Temperamentos: {dog.temperament?.map((temp)=>{return temp + ' '})}</p>    
-                    <p>Peso: {dog.weight}</p>
-                    
-                    <img
-                        src={dog.img ? dog.img : dog.image}
-                        width="450px"
-                        height="250px"
-                        alt="IMG NOT FOUND"
-                    />
-                    <form action={DOGS_URL_3000+dog.id}>
-                        <input type='submit' value='Detalles'/>
-                    </form>
-                    
+                <div className= "select-container">
+                    <div>
+                        <label>Temperamentos: </label>
+                        <select onChange={handleSelect}>
+                            {temperaments?.map((temp) => (
+                                <option value={temp.name}>{temp.name}</option>
+                                ))}
+                        </select>
+                        <input
+                            input= 'text'
+                            value= {input.temperament}
+                            name= 'temperament'
+                            size='70'
+                        />
+                        <button>Buscar</button>
+                        {input.temperament.map(el =>
+                        <div className='divTemp'>
+                            <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
+                        </div>
+                        )
+                    }
+                    </div>
                 </div>
-                );
-            })}
+
+                <a className= "p-select">Ordenar alfabeticamente:</a>
+                <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
+                    <option value= "asc-desc">Ascendente a descendente</option>
+                    <option value= "desc-asc">Descendente a ascendente</option>
+                </select>
+
+                <a className= "p-select">Ordenar por peso:</a>
+                <select value= {peso} onChange= {pesoSelectedChange}>
+                    <option value="liviano-pesado">Más liviano a más pesado</option>
+                    <option value="pesado-liviano">Más pesado a más liviano</option>
+                </select>
+
+                <a className= "p-select">Ordenar por creado:</a>
+                <select onChange= {e =>handleFilterCreated(e)}>
+                    <option value="All">Todos</option>
+                    <option value="created">Creados</option>
+                    <option value="api">Existentes</option>
+                </select>
+                
+                <div>
+                <SearchBar/>
+                <Paginado
+                dogsPerPage= {dogsPerPage}
+                allDogs = {allDogs.length}
+                paginado = {paginado}
+                />
+                
+                <div className='cardsContainer'>
+                {currentDogs.filter((dog) => {
+                    if(searchTerm == ''){
+                        return dog
+                    } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                        return dog
+                    }
+                }
+                    ).map((dog) => { // antes estaba alldogs.map
+                    return (
+                    <div className='card'>
+                        <div className='card-body'>
+                        <img
+                            src={dog.img ? dog.img : dog.image}
+                            alt="IMG NOT FOUND"
+                            className='dogImage'
+                        />
+                        <h2 className='card-title'>{dog.name}</h2>
+                        <p className='card-description'>Temperamentos: {dog.temperament?.map((temp)=>{return temp + ' '})}</p>    
+                        <p>Peso: {dog.weight}</p>
+                        
+                        
+                        <form action={DOGS_URL_3000+dog.id}>
+                            <input type='submit' value='Detalles'/>
+                        </form>
+                        </div>
+                    </div>
+                    );
+                })}
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
         </div>
     );
     
