@@ -3,7 +3,7 @@ import './Paginado.css'
 
 export default function Paginado({dogsPerPage, allDogs, paginado}){
     const pageNumbers = []
-    for(let i = 0; i<=Math.ceil(allDogs/dogsPerPage);i++){
+    for(let i = 0; i<Math.ceil(allDogs/dogsPerPage);i++){
         pageNumbers.push(i+1)
     }
 

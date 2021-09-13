@@ -126,8 +126,8 @@ export default function Home() {
 
 
     return (
-        <div >
-            <h1>DogsApp</h1>
+        <div>
+            <br></br>
             <button onClick={(e) => {handleClick(e);}}>
                 Recargar los personajes
             </button>
@@ -172,8 +172,8 @@ export default function Home() {
                 <a className= "p-select">Ordenar por creado:</a>
                 <select onChange= {e =>handleFilterCreated(e)}>
                     <option value="All">Todos</option>
-                    <option value="created">Creados</option>
-                    <option value="api">Existentes</option>
+                    <option value="created">Creados Web</option>
+                    <option value="api">API</option>
                 </select>
                 
                 <div>
