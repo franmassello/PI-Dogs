@@ -9,7 +9,7 @@ import axios from "axios"
 import { DOGS_URL_3000 } from "../../constants";
 import './Home.css'
 
-
+// commented
 export default function Home() {
     const dispatch = useDispatch();
     const allDogs = useSelector((state) => state.dogs);
