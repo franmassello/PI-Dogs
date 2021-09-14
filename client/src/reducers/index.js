@@ -70,7 +70,7 @@ export default function reducer (state = initialState, action) {
             return {
                 ...state,
                 temperaments: action.payload
-                };
+            };
         case "GET_DETAILS":
             return {
                 ...state,
