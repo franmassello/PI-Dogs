@@ -10,9 +10,12 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+// On this file I have defined the routes of our API with a few functions that will help the routes
+
+//---------------- FUNCTIONS ----------------
 const getApiInfo = async()=>{
-    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds')
-    const apiInfo = await apiUrl.data.map(el => {
+    const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds') // Here i make a get request to the API provided in the README and save the raw data on apiUrl
+    const apiInfo = await apiUrl.data.map(el => { // Here i map the data that i need from the api and save it on apiInfo
         return {
             id: el.id,
             name: el.name,
@@ -23,11 +26,12 @@ const getApiInfo = async()=>{
             temperament: el.temperament?.split(", ")
         };
     });
-    return apiInfo
+    return apiInfo 
 }
-const getDbInfo = async () => {
-    return await Razas.findAll({
-        include: {
+
+const getDbInfo = async () => { // This function will retrieve all the data from the table 'Razas'
+    return await Razas.findAll({  // And i will save all that data in getDbInfo for future queries 
+        include: {                // Where i will need all the dogs created in the db
             model: Temperament,
             attributes: ['name'],
             through: {
@@ -36,18 +40,19 @@ const getDbInfo = async () => {
         }
     })
 }
-const getAllDogs = async () => {
-    let apiInfo = await getApiInfo();
+
+const getAllDogs = async () => {        //This function will get all the dogs from the API and the DB
+    let apiInfo = await getApiInfo();   
     let dbInfo = await getDbInfo();
-    let infoTotal = apiInfo.concat(dbInfo)
+    let infoTotal = apiInfo.concat(dbInfo) //Here i concatenate the two data streams
     return infoTotal
 }
 
-const chargeTempApiToDb = async () => {
-    let allData = await getApiInfo();
-    let alltemps = [];
-    allData.map((el) => {
-      let elTemp = el.temperament;
+const chargeTempApiToDb = async () => {   // This function will make a get request to the API 
+    let allData = await getApiInfo();     // and save all that raw data (name, height, weight, etc)
+    let alltemps = [];                    // Then i map all that raw data and extract the temperament for each dog 
+    allData.map((el) => {                 // I push all the temperaments in alltemps and then insert alltemps 
+      let elTemp = el.temperament;        // and then for each temperament in alltemps i create a temperament in the table 'temperaments'
       if(elTemp !== undefined){
       for (let i = 0; i < elTemp.length; i++) {
         let tem = el.temperament[i];
@@ -63,7 +68,12 @@ const chargeTempApiToDb = async () => {
     });
   };
 
-chargeTempApiToDb()
+chargeTempApiToDb() // Charge the temps to the db
+
+//-------------------------------------------
+
+
+//---------------- ROUTES ----------------
 
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name

@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
+// Here we define the properties of the table 'razas', using unique id and the corresponding configs
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('razas', {
