@@ -2,14 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getDogs, sortBreeds, filterCreated } from "../../actions/dogActions";
+import { getDogs, sortBreeds, filterCreated, filterDogsByTemperament} from "../../actions/dogActions";
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
 import { DOGS_URL_3000 } from "../../constants";
 import './Home.css'
 
-// commented
 export default function Home() {
     const dispatch = useDispatch();
     const allDogs = useSelector((state) => state.dogs);
@@ -35,7 +34,7 @@ export default function Home() {
     const [ searchTerm, setSearchTerm] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
-    const [temperamentSelected, setTemperamentSelected] = useState("")
+    const [ temperamentSelected, setTemperamentSelected ] = useState("")
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -57,17 +56,15 @@ export default function Home() {
         console.log(error);
     });        
     }, [])
-    
+
     function handleClick(e) {
         e.preventDefault();
         dispatch(getDogs());
     }
 
-    function handleChangeAscDesc(e){
-        e.preventDefault()
-        let valorOrden = e.target.value
-        dispatch(sortBreeds(valorOrden, allDogs))
-    } 
+    const temperamentChange = (e) => {
+        dispatch(filterDogsByTemperament(e.target.value))
+    }
 
     const alfabetSelectedChange = (e) => {
         if(e.target.value === "asc-desc") {
@@ -97,11 +94,6 @@ export default function Home() {
         setPeso(e.target.value)
     }
 
-    const temperamentChange = (e) => {
-        let temperament = e.target.value
-        setTemperamentSelected(temperament)
-    } 
-
     function handleFilterCreated(e){
         dispatch(filterCreated(e.target.value))
     }
@@ -120,11 +112,6 @@ export default function Home() {
         })
     }
 
-    function handleSearchTemperaments(input){
-        axios.get()
-    }
-
-
     return (
         <div>
             <br></br>
@@ -136,24 +123,13 @@ export default function Home() {
                 <div className= "select-container">
                     <div>
                         <label>Temperamentos: </label>
-                        <select onChange={handleSelect}>
+                        <select onChange={temperamentChange} /* onClick={temperamentChange} */>
+                            <option value='All'>Todos</option>
                             {temperaments?.map((temp) => (
                                 <option value={temp.name}>{temp.name}</option>
                                 ))}
                         </select>
-                        <input
-                            input= 'text'
-                            value= {input.temperament}
-                            name= 'temperament'
-                            size='70'
-                        />
-                        <button>Buscar</button>
-                        {input.temperament.map(el =>
-                        <div className='divTemp'>
-                            <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
-                        </div>
-                        )
-                    }
+                        
                     </div>
                 </div>
 
@@ -199,6 +175,8 @@ export default function Home() {
                         return dog
                     } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
                         return dog
+                    } else if (temperamentSelected){
+                        console.log(temperamentSelected)
                     }
                 }
                     ).map((dog) => { // antes estaba alldogs.map
