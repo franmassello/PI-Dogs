@@ -6,6 +6,15 @@ export const SORT_BREEDS = 'SORT_BREEDS'
 export const ASD = 'Razas-A-Z';
 export const DES = 'Razas-Z-A';
 
+// In this file i define all the actions needed
+// getDogs will dispatch the data obtained from the get request to my API
+// postDog will post a dog in the API, and wil return a response
+// filterCreated will return the type of action needed to be done in the reducer
+// getDogsBreed will recieve a breed name and will return the data needed for the reducer to return the dogs with the input recieved
+// getTemperaments will get the temperaments in the API and pass them to the reducer
+// sortBreeds will sort the breeds, recieving the order(asc or desc) and the dogs to sort
+// getDetail will make a get request to the dog and return that info to the reducer
+
 export function getDogs(){
     return async (dispatch) => {
        let allDOGS = await axios(DOGS_URL)
