@@ -2,7 +2,7 @@ const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
-const { Razas , Temperament } = require ('../db');
+const { Razas , Temperaments } = require ('../db');
 const { combineTableNames } = require('sequelize'); // sequelize/types/lib/utils
 const { noExtendLeft } = require('sequelize'); // /types/lib/operators
 const router = Router();
@@ -23,7 +23,7 @@ const getApiInfo = async()=>{
             height: el.height.metric,
             weight: el.weight.metric,
             lifespan: el.life_span,
-            temperament: el.temperament?.split(", ")
+            temperaments: el.temperament?.split(", ")
         };
     });
     return apiInfo 
@@ -32,7 +32,7 @@ const getApiInfo = async()=>{
 const getDbInfo = async () => { // This function will retrieve all the data from the table 'Razas'
     return await Razas.findAll({  // And i will save all that data in getDbInfo for future queries 
         include: {                // Where i will need all the dogs created in the db
-            model: Temperament,
+            model: Temperaments,
             attributes: ['name'],
             through: {
                 attributes: [],
@@ -42,27 +42,42 @@ const getDbInfo = async () => { // This function will retrieve all the data from
 }
 
 const getAllDogs = async () => {        //This function will get all the dogs from the API and the DB
-    let apiInfo = await getApiInfo();   
-    let dbInfo = await getDbInfo();
-    let infoTotal = apiInfo.concat(dbInfo) //Here i concatenate the two data streams
-    return infoTotal
+  const apiData = await getApiInfo();
+  const dbData = await getDbInfo();
+  const dbTempFil = await dbData?.map((breed) => {
+    let { id, name, height, weight, life_span, image, createdInDb } = breed;
+    return {
+      id,
+      name,
+      height,
+      weight,
+      life_span,
+      image,
+      createdInDb,
+      temperaments: breed.temperaments?.map((temp) => {
+        return temp.name;
+      }),
+    };
+  });
+  const allData = apiData.concat(dbTempFil);
+  return allData;
 }
 
 const chargeTempApiToDb = async () => {   // This function will make a get request to the API 
     let allData = await getApiInfo();     // and save all that raw data (name, height, weight, etc)
     let alltemps = [];                    // Then i map all that raw data and extract the temperament for each dog 
     allData.map((el) => {                 // I push all the temperaments in alltemps and then insert alltemps 
-      let elTemp = el.temperament;        // and then for each temperament in alltemps i create a temperament in the table 'temperaments'
+      let elTemp = el.temperaments;        // and then for each temperament in alltemps i create a temperament in the table 'temperaments'
       if(elTemp !== undefined){
       for (let i = 0; i < elTemp.length; i++) {
-        let tem = el.temperament[i];
+        let tem = el.temperaments[i];
         if (!alltemps.includes(tem)) {
           alltemps.push(tem);
         }}
       }
     });
     alltemps.forEach((temp) => {
-      Temperament.findOrCreate({
+      Temperaments.findOrCreate({
         where: { name: temp },
       });
     });
@@ -90,16 +105,27 @@ router.get('/dogs', async(req,res) =>{
 
 router.get('/temperament', async(req,res) =>{
     chargeTempApiToDb()
-    const allTemperaments = await Temperament.findAll()
+    const allTemperaments = await Temperaments.findAll()
     res.send(allTemperaments)
 })
 
-router.post('/dogs', async(req,res, next) =>{
-    const datos = req.body
-    Razas.create(datos)
-        .then(datos => res.send(datos))
-        .catch(error => next(error))
-})
+router.post('/dogs', async(req, res, next) => {
+    const element = req.body;
+    try {
+      return Razas
+        .create({
+          ...element,
+        })
+        .then((breed) => {
+          breed.addTemperaments(element.temperaments);
+        })
+        .then((created) => {
+          return res.send(created);
+        });
+    } catch (err) {
+      next(err.toJSON);
+    }
+  })
 
 router.get('/dogs/:idRaza', async(req,res) =>{
     const id = req.params.idRaza
