@@ -172,7 +172,7 @@ export default function Home() {
                 <a className= "p-select">Ordenar por creado:</a>
                 <select onChange= {e =>handleFilterCreated(e)}>
                     <option value="All">Todos</option>
-                    <option value="created">Creados Web</option>
+                    <option value="created">Web</option>
                     <option value="api">API</option>
                 </select>
                 
