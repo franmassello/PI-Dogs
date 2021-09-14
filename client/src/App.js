@@ -7,8 +7,8 @@ import Detail from './components/Detail/Detail'
 import Navbar from './components/Navbar/Navbar';
 
 
-function App() {
-  return (
+function App() {  // Main file, here i define all the routes in my webapp, and the react components
+  return (        // those routes will use
     <BrowserRouter>
         <Switch>
           <Route exact path='/' component={LandingPage}/>
