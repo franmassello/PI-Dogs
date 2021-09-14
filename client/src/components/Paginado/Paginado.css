@@ -15,3 +15,15 @@ ul.pagination li a {
     margin-bottom: 10px;
     outline: 1px solid #000;
 }
+
+.button {
+    background-color: #060b26; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
