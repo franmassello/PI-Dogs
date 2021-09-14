@@ -6,12 +6,6 @@ export const SORT_BREEDS = 'SORT_BREEDS'
 export const ASD = 'Razas-A-Z';
 export const DES = 'Razas-Z-A';
 
-
-function setFirstLetterToCap(string){
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-
 export function getDogs(){
     return async (dispatch) => {
        let allDOGS = await axios(DOGS_URL)

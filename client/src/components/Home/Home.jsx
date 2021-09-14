@@ -129,7 +129,7 @@ export default function Home() {
         <div>
             <br></br>
             <button onClick={(e) => {handleClick(e);}}>
-                Recargar los personajes
+                Reiniciar filtros
             </button>
 
             <div>
@@ -157,24 +157,33 @@ export default function Home() {
                     </div>
                 </div>
 
-                <a className= "p-select">Ordenar alfabeticamente:</a>
-                <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
-                    <option value= "asc-desc">Ascendente a descendente</option>
-                    <option value= "desc-asc">Descendente a ascendente</option>
-                </select>
+                <p className= "p-select">Ordenar alfabeticamente:
+                    <span>
+                        <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
+                            <option value= "asc-desc">Ascendente a descendente</option>
+                            <option value= "desc-asc">Descendente a ascendente</option>
+                        </select>
+                    </span>
+                </p>
 
-                <a className= "p-select">Ordenar por peso:</a>
-                <select value= {peso} onChange= {pesoSelectedChange}>
-                    <option value="liviano-pesado">Más liviano a más pesado</option>
-                    <option value="pesado-liviano">Más pesado a más liviano</option>
-                </select>
+                <p className= "p-select">Ordenar por peso:
+                    <span>
+                        <select value= {peso} onChange= {pesoSelectedChange}>
+                            <option value="liviano-pesado">Más liviano a más pesado</option>
+                            <option value="pesado-liviano">Más pesado a más liviano</option>
+                        </select>
+                    </span>
+                </p>
 
-                <a className= "p-select">Ordenar por creado:</a>
-                <select onChange= {e =>handleFilterCreated(e)}>
-                    <option value="All">Todos</option>
-                    <option value="created">Web</option>
-                    <option value="api">API</option>
-                </select>
+                <p className= "p-select">Ordenar por creado:
+                    <span>
+                        <select onChange= {e =>handleFilterCreated(e)}>
+                            <option value="All">Todos</option>
+                            <option value="created">Web</option>
+                            <option value="api">API</option>
+                        </select>
+                    </span>
+                </p>
                 
                 <div>
                 <SearchBar/>
