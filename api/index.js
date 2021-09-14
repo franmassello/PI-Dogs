@@ -29,3 +29,4 @@ conn.sync({ force: true }).then(() => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   })/* .catch(err => console.error(err)); */
 });
+// Here the server is starting to listen in port 3001
