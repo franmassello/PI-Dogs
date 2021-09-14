@@ -65,6 +65,7 @@ export default function CreateDog(){
     }
 
     function handleSubmit(e){
+        console.log('temps recibidas: ',input.temperaments)
         e.preventDefault()
         let temps = tempFiltersToApply(input.temperaments)
         let newDog = {

@@ -28,8 +28,9 @@ export function getDogs(){
 
 export function postDog(payload){
     return async function (dispatch){
+        console.log(Object.keys(payload))
         const response = await axios.post(POSTDOG_URL,payload)
-        console.log(response)
+        //console.log(response)
         return response
     }
 }

@@ -211,7 +211,7 @@ export default function Home() {
                             className='dogImage'
                         />
                         <h2 className='card-title'>{dog.name}</h2>
-                        <p className='card-description'>Temperamentos: {dog.temperament?.map((temp)=>{return temp + ' '})}</p>    
+                        <p className='card-description'>Temperamentos: {dog.temperaments?.map((temp)=>{return temp + ' '})}</p>    
                         <p>Peso: {dog.weight}</p>
                         
                         
