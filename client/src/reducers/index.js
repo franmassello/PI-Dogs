@@ -27,6 +27,14 @@ export default function reducer (state = initialState, action) {
                 dogs: action.payload === 'All' ? state.allDogs : createdFilter
             }
 
+        case "FILTER_BY_TEMPERAMENT":
+            const allDogsTemp = state.allDogs
+            const temperamentFiltered = action.payload === 'All' ? allDogsTemp : allDogsTemp.filter( el => el.temperaments?.includes(action.payload))
+            return {
+                ...state,
+                dogs: temperamentFiltered
+            }
+
         case "POST_DOG":
             return {
                 ...state, 

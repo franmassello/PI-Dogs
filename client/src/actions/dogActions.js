@@ -26,6 +26,13 @@ export function getDogs(){
     }
 }
 
+export function filterDogsByTemperament(payload){
+    return {
+        type: 'FILTER_BY_TEMPERAMENT',
+        payload
+    }
+}
+
 export function postDog(payload){
     return async function (dispatch){
         console.log(Object.keys(payload))
