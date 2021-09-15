@@ -10,7 +10,6 @@ export default function SearchBar(){
     function handleInputChange (e){
         e.preventDefault()
         setBreed(e.target.value)
-        //console.log(breed)
     }
 
     function handleSubmit(e){
@@ -20,7 +19,7 @@ export default function SearchBar(){
 
     return (
         <div>
-            <a>Buscar por nombre: </a>
+            <b>Buscar por nombre: </b>
             <input 
             type = 'text'
             placeholder = 'Buscar...'

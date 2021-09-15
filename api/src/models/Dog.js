@@ -29,6 +29,7 @@ module.exports = (sequelize) => {
     },
     lifespan:{
       type: DataTypes.STRING,
+      defaultValue: '0',
       allowNull: true
     },
     createdInDb:{  // Por si se quiere llamar a todo lo que se creo en base de datos
