@@ -126,7 +126,7 @@ export default function Home() {
                         <select onChange={temperamentChange} /* onClick={temperamentChange} */>
                             <option value='All'>Todos</option>
                             {temperaments?.map((temp) => (
-                                <option value={temp.name}>{temp.name}</option>
+                                <option key= {temp.name} value={temp.name}>{temp.name}</option>
                                 ))}
                         </select>
                         
@@ -181,7 +181,7 @@ export default function Home() {
                 }
                     ).map((dog) => { // antes estaba alldogs.map
                     return (
-                    <div className='card'>
+                    <div key={dog.name} className='card'>
                         <div className='card-body'>
                         <img
                             src={dog.img ? dog.img : dog.image}

@@ -93,7 +93,6 @@ chargeTempApiToDb() // Charge the temps to the db
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name
     let dogsTotal = await getAllDogs();
-    try{
     if(name){
         let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
         dogName.length ?
@@ -102,9 +101,6 @@ router.get('/dogs', async(req,res) =>{
     } else {
         res.status(200).send(dogsTotal)
     }
-  } catch (err){
-    next(err.toJSON);
-  }
 })
 
 router.get('/temperament', async(req,res) =>{

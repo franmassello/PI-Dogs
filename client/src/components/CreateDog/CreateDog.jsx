@@ -179,14 +179,6 @@ export default function CreateDog(){
                 }
                 <button type='submit'> Crear Raza</button>
             </form>
-                {/* {input.temperaments.map(el =>
-                    <div className='divTemp'>
-                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
-                    </div>
-                    )
-                } */}
-
-            
         </div>
     )
 
