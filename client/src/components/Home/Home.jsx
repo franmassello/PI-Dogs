@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getDogs, sortBreeds, filterCreated, filterDogsByTemperament} from "../../actions/dogActions";
+import { getDogs, filterCreated, filterDogsByTemperament} from "../../actions/dogActions";
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
@@ -13,7 +13,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const allDogs = useSelector((state) => state.dogs);
     const [ currentPage, setCurrentPage] = useState(1)
-    const [ dogsPerPage, setDogsPerPage ] = useState(8)
+    const [ dogsPerPage] = useState(8)
 
     const [orderAlfabet, setOrderAlfabet] = useState("")
     const [peso, setPeso] = useState("")
@@ -22,19 +22,19 @@ export default function Home() {
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
 
-    const [ input, setInput] = useState({
+    /* const [ input, setInput] = useState({
         name: '',
         height: '',
         weight: '',
         image: '',
         lifespan: '',
         temperament:[]
-    })
+    }) */
 
-    const [ searchTerm, setSearchTerm] = useState('')
+    const [ searchTerm ] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
-    const [ temperamentSelected, setTemperamentSelected ] = useState("")
+    const [ temperamentSelected] = useState("")
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -98,20 +98,20 @@ export default function Home() {
         dispatch(filterCreated(e.target.value))
     }
 
-    function handleSelect(e) {
+    /* function handleSelect(e) {
         setInput({
             ...input,
             temperament: [...input.temperament, e.target.value]
         })
-    }
+    } */
 
-    function handleDelete(el){
+    /* function handleDelete(el){
         setInput({
             ...input,
             temperament: input.temperament.filter( temp => temp !== el)
         })
     }
-
+ */
     return (
         <div>
             <br></br>
@@ -171,7 +171,7 @@ export default function Home() {
                 
                 <div className='cardsContainer'>
                 {currentDogs.filter((dog) => {
-                    if(searchTerm == ''){
+                    if(searchTerm === ''){
                         return dog
                     } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
                         return dog

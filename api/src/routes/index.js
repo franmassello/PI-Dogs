@@ -93,6 +93,7 @@ chargeTempApiToDb() // Charge the temps to the db
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name
     let dogsTotal = await getAllDogs();
+    try{
     if(name){
         let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
         dogName.length ?
@@ -101,6 +102,9 @@ router.get('/dogs', async(req,res) =>{
     } else {
         res.status(200).send(dogsTotal)
     }
+  } catch (err){
+    next(err.toJSON);
+  }
 })
 
 router.get('/temperament', async(req,res) =>{
@@ -109,22 +113,19 @@ router.get('/temperament', async(req,res) =>{
     res.send(allTemperaments)
 })
 
-router.post('/dogs', async(req, res, next) => {
+router.post('/dogs', (req, res, next) => {
     const element = req.body;
-    try {
-      return Razas
-        .create({
-          ...element,
-        })
-        .then((breed) => {
-          breed.addTemperaments(element.temperaments);
-        })
-        .then((created) => {
-          return res.send(created);
-        });
-    } catch (err) {
-      next(err.toJSON);
-    }
+    console.log(element)
+    return Razas
+      .create({
+        ...element,
+      })
+      .then((breed) => {
+        breed.addTemperaments(element.temperaments);
+      })
+      .then((created) => {
+        return res.json(created).send(created);
+      });
   })
 
 router.get('/dogs/:idRaza', async(req,res) =>{
