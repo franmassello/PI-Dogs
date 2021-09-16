@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from 'react';
 
 export default function Detail(props){
-    console.log(props)
+    /* console.log(props) */
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getDetail(props.match.params.id))
-    },[dispatch])
+    }) // saque el dependency array [dispatch]
     
     const myDog = useSelector((state) => state.detail)
 

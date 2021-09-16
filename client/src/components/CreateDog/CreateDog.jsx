@@ -65,7 +65,7 @@ export default function CreateDog(){
     }
 
     function handleSubmit(e){
-        console.log('lifespan recibidas: ',input)
+        console.log('lifespan recibido: ',input)
         e.preventDefault()
         let temps = tempFiltersToApply(input.temperaments)
         let newDog = {
@@ -93,8 +93,8 @@ export default function CreateDog(){
     }
 
     useEffect(() => {
-        dispatch(getTemperaments()) //Hacer gettemperaments en actionsgetTemperaments()
-    }, [])
+        dispatch(getTemperaments())
+    }, [dispatch]) // agregue dispatch entre [] por un bug
 
     return (
         <div>
@@ -162,12 +162,13 @@ export default function CreateDog(){
                         value= {input.temperaments}
                         name= 'temperaments'
                         size='70'
+                        onChange={() => {}} //onChange vacio por bug
                     />
                 
                 <select onChange={handleSelect}>
                     {
                     temperaments.map((temp) => (
-                        <option key={temp} value={temp.name} name={temp.name}>{temp.name}</option>
+                        <option value={temp.name} name={temp.name}>{temp.name}</option>
                         ))}
                 </select>
                 </div>

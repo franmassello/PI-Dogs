@@ -35,7 +35,7 @@ export function filterDogsByTemperament(payload){
 
 export function postDog(payload){
     return async function (dispatch){
-        console.log(Object.keys(payload))
+        /* console.log(Object.keys(payload)) */
         const response = await axios.post(POSTDOG_URL,payload)
         //console.log(response)
         return response
@@ -102,6 +102,7 @@ export function sortBreeds(orden, razas){
             }
             return 0
         }
+        return false // agregue este return por un bug
     })
     return function(dispatch){
         dispatch({type: SORT_BREEDS, payload: razaSort})

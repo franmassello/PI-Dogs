@@ -22,19 +22,9 @@ export default function Home() {
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
 
-    /* const [ input, setInput] = useState({
-        name: '',
-        height: '',
-        weight: '',
-        image: '',
-        lifespan: '',
-        temperament:[]
-    }) */
-
     const [ searchTerm ] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
-    const [ temperamentSelected] = useState("")
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -42,7 +32,7 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(getDogs());
-    }, []);
+    }, [dispatch]); // agregue dispatch entre [] por un bug
 
     useEffect(() => {
         axios.get(`http://localhost:3001/temperament`) 
@@ -55,7 +45,7 @@ export default function Home() {
         .catch((error) => {
         console.log(error);
     });        
-    }, [])
+    }, [dispatch]) // agregue dispatch entre [] por un bug
 
     function handleClick(e) {
         e.preventDefault();
@@ -97,21 +87,7 @@ export default function Home() {
     function handleFilterCreated(e){
         dispatch(filterCreated(e.target.value))
     }
-
-    /* function handleSelect(e) {
-        setInput({
-            ...input,
-            temperament: [...input.temperament, e.target.value]
-        })
-    } */
-
-    /* function handleDelete(el){
-        setInput({
-            ...input,
-            temperament: input.temperament.filter( temp => temp !== el)
-        })
-    }
- */
+    
     return (
         <div>
             <br></br>
@@ -175,9 +151,8 @@ export default function Home() {
                         return dog
                     } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
                         return dog
-                    } else if (temperamentSelected){
-                        console.log(temperamentSelected)
-                    }
+                    } 
+                    return false // agregue este return por un bug
                 }
                     ).map((dog) => { // antes estaba alldogs.map
                     return (
