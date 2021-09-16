@@ -1,0 +1,4 @@
+-Estilos details de cada dog 
+-Arreglar los <p> de los filtros/ordenamientos
+-Estilo del boton Detalles en la /home
+-Añadir el logo en algun lado
