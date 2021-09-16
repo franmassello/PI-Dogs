@@ -83,7 +83,7 @@ const chargeTempApiToDb = async () => {   // This function will make a get reque
     });
   };
 
-chargeTempApiToDb() // Charge the temps to the db
+chargeTempApiToDb() // Charge the temps to the db when script is runned
 
 //-------------------------------------------
 
@@ -128,14 +128,20 @@ router.post('/dogs', (req, res, next) => {
       });
   })
 
-router.get('/dogs/:idRaza', async(req,res) =>{
+router.get('/dogs/id', async(req,res) =>{
     const id = req.params.idRaza
+    const idQuery = req.query.id
+    console.log('idquery recibido', idQuery)
     let razasTotal = await getAllDogs()
-    //console.log(razasTotal)
     if(id){
         let dogId = await razasTotal.filter(el => el.id.toString() === id.toString()) //Antes estaba como parseInt
         dogId.length?
         res.status(200).send(dogId) :
+        res.status(404).send('No se ha encontrado el perro!')
+    } else if (idQuery){
+        let dogId1 = await razasTotal.filter(el => el.id?.toString() === idQuery?.toString()) //Antes estaba como parseInt
+        dogId1.length?
+        res.status(200).send(dogId1) :
         res.status(404).send('No se ha encontrado el perro!')
     }
 }) 
