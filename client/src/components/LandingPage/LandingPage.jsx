@@ -1,16 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import styles from "./LandingPage.module.css"
+
+import './LandingPage.css'
+import '../../images/backgroundLanding.jpg'
 
 export default function LandingPage(){
-    return(
+    return( 
         <div>
-            <form className={styles.box}>
-                <h1 className={styles.h1}>Bienvenido a WikiDogs!</h1>
-                <Link to='/home'>
-                <button type='submit' className={styles.submit}>Ingresar</button>
-                </Link>
-            </form>
+            <div className='landingContainer'> </div>
+            <div className='landingContainer2'>
+                <div className='boxContainer'>
+                    <h1 className='h1'>WikiDogs</h1>
+                    <Link to='/home'>
+                    <button type='submit' className='button button1'>Ingresar</button>
+                    </Link>
+            </div>
+            </div>
         </div>
     )
 }

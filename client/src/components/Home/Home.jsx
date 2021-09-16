@@ -89,45 +89,50 @@ export default function Home() {
     }
     
     return (
-        <div>
+        <div className='mainContainer'>
             <br></br>
-            <button onClick={(e) => {handleClick(e);}}>
-                Reiniciar filtros
-            </button>
-
-            <div>
+            <div className='allButtonContainer'>
+                <div className='buttonContainer'>
+                    <button className='resetButton' onClick={(e) => {handleClick(e);}}>
+                        Reiniciar filtros
+                    </button>
+                </div>
+            <div className='searchInput'>
+                <a>Buscar por nombre: </a>
+                <SearchBar/>
+            </div>
                 <div className= "select-container">
-                    <div>
-                        <label>Temperamentos: </label>
-                        <select onChange={temperamentChange} /* onClick={temperamentChange} */>
-                            <option value='All'>Todos</option>
-                            {temperaments?.map((temp) => (
-                                <option key= {temp.name} value={temp.name}>{temp.name}</option>
-                                ))}
-                        </select>
-                        
-                    </div>
+                    <p>Temperamentos: </p>
+                    <select onChange={temperamentChange} /* onClick={temperamentChange} */>
+                        <option value='All'>Todos</option>
+                        {temperaments?.map((temp) => (
+                            <option key= {temp.name} value={temp.name}>{temp.name}</option>
+                            ))}
+                    </select>
                 </div>
 
-                <p className= "p-select">Ordenar alfabeticamente:
+                <div className= "p-select">
+                    <p>Ordenar alfabeticamente:</p>
                     <span>
                         <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
                             <option value= "asc-desc">Ascendente a descendente</option>
                             <option value= "desc-asc">Descendente a ascendente</option>
                         </select>
                     </span>
-                </p>
+                </div>
 
-                <p className= "p-select">Ordenar por peso:
+                <div className= "p-select">
+                    <p>Ordenar por peso:</p>
                     <span>
                         <select value= {peso} onChange= {pesoSelectedChange}>
                             <option value="liviano-pesado">Más liviano a más pesado</option>
                             <option value="pesado-liviano">Más pesado a más liviano</option>
                         </select>
                     </span>
-                </p>
+                </div>
 
-                <p className= "p-select">Ordenar por creado:
+                <div className= "p-select">
+                    <p>Ordenar por creado:</p>
                     <span>
                         <select onChange= {e =>handleFilterCreated(e)}>
                             <option value="All">Todos</option>
@@ -135,10 +140,10 @@ export default function Home() {
                             <option value="api">API</option>
                         </select>
                     </span>
-                </p>
-                
-                <div>
-                <SearchBar/>
+                </div>
+               
+            </div>
+                <div className='main'>
                 <Paginado
                 dogsPerPage= {dogsPerPage}
                 allDogs = {allDogs.length}
@@ -177,7 +182,6 @@ export default function Home() {
                 })}
                     </div>
                 </div>
-            </div>
         </div>
     );
     

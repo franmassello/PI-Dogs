@@ -1,3 +1,8 @@
+.Home{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .card{
     overflow: hidden;
     box-shadow: 0 2px 20px #e1e5ee;
@@ -7,17 +12,79 @@
     justify-content: space-between;
     cursor: pointer;
     transition: transform 200ms ease-in;
+    background-color: white;
+
 }
 
 
 .cardsContainer{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 16rem));
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 16rem)); /* cards size */
     gap: 2rem;
     justify-content: center;
+
 }
 .dogImage{
     height: 12rem;
     width: 100%;
     object-fit: cover;
+}
+.mainContainer{
+    background-color: #faf9e3;
+    display:flex;
+    flex-direction:row;
+}
+
+.resetButton {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    border: 2px solid #3e6cff;
+    padding: 10px 20px;
+    outline: none;
+    color: #3e6cff;
+    border-radius: 25px;
+    transition: 0.45s;
+    cursor: pointer;
+    width: 150px;
+}
+.resetButton:hover {
+    background: red;
+  }
+
+.buttonContainer{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+    flex:auto
+} 
+.select-container{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+    flex:auto
+} 
+.p-select{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+    flex:auto
+} 
+.main{
+    width: 100%;
+    clear:both;
+    position:relative;
+    right: 0px;
+}
+
+.allButtonContainer{
+    width: 200px;
+    padding-right: 200px;
+}
+
+.searchInput{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
 }

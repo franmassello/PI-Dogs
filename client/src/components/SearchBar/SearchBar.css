@@ -1,0 +1,13 @@
+.searchComponent{
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    display:flex
+}
+
+.inputSearch{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
