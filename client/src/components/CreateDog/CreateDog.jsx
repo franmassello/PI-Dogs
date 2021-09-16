@@ -77,7 +77,9 @@ export default function CreateDog(){
         input.weightMin = input.weightMin + ' - '
         input.weight = input.weightMin?.concat(input.weightMax)
 
-        console.log('lifespan recibido: ',input)
+        input.lifespan = input.lifespan + ' years'
+
+        /* console.log('lifespan recibido: ',input) */
         e.preventDefault()
         let temps = tempFiltersToApply(input.temperaments)
         let newDog = {
@@ -201,13 +203,13 @@ export default function CreateDog(){
                 <select onChange={handleSelect}>
                     {
                     temperaments.map((temp) => (
-                        <option value={temp.name} name={temp.name}>{temp.name}</option>
+                        <option key={temp.name} value={temp.name} name={temp.name}>{temp.name}</option>
                         ))}
                 </select>
                 </div>
                 {input.temperaments.map(el =>
-                    <div className='divTemp'>
-                        <button className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
+                    <div key={el} className='divTemp'>
+                        <button  className='botonX' onClick={()=> handleDelete(el)}>{el} x</button>
                     </div>
                     )
                 }
