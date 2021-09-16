@@ -14,7 +14,7 @@ function App() {  // Main file, here i define all the routes in my webapp, and t
         <Switch>
           <Route exact path='/' component={LandingPage}/>
           <>
-            <Navbar />
+            <Navbar/>
             <Route exact path='/home' component={Home}/>
             <Route exact path='/dogs' component={CreateDog}/>
             <Route exact path='/dogs/:id' component={Detail}/>
