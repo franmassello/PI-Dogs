@@ -2,16 +2,21 @@ import React, {useState, useEffect}from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {postDog, getTemperaments} from '../../actions/dogActions'; // Falta el get temperaments
 import { useDispatch, useSelector } from "react-redux"
+import './CreateDog.css'
 
 
 function validate(input){
     let errors = {}
     if(!input.name){
         errors.name = 'Se requiere un nombre!'
-    } else if (!input.weight){
-        errors.weight = 'Se requiere peso!'
-    } else if (!input.height){
-        errors.height = 'Se requiere altura!'
+    } else if (!input.weightMin){
+        errors.weightMin = 'Se requiere peso minimo!'
+    } else if (!input.weightMax){
+        errors.weightMax = 'Se requiere peso maximo!'
+    } else if (!input.heightMin){
+        errors.heightMin = 'Se requiere altura minima!'
+    } else if (!input.heightMax){
+        errors.heightMax = 'Se requiere altura maxima!'
     }
     return errors
 }
@@ -45,6 +50,7 @@ export default function CreateDog(){
     })
 
     function handleChange(e) {
+        
         setInput({
             ...input,
             [e.target.name] : e.target.value
@@ -64,7 +70,13 @@ export default function CreateDog(){
         })
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e){ 
+        input.heightMin = input.heightMin + ' - '
+        input.height = input.heightMin?.concat(input.heightMax)
+
+        input.weightMin = input.weightMin + ' - '
+        input.weight = input.weightMin?.concat(input.weightMax)
+
         console.log('lifespan recibido: ',input)
         e.preventDefault()
         let temps = tempFiltersToApply(input.temperaments)
@@ -113,28 +125,48 @@ export default function CreateDog(){
                         <p className='error'>{errors.name}</p>
                     )}
                 </div>
+                
                 <div>
-                    <label>Altura: </label>
+                <label>Altura: </label>
                     <input
                         input= 'text'
-                        value= {input.height}
-                        name= 'height'
+                        value= {input.heightMin}
+                        name= 'heightMin'
                         onChange={(e)=>handleChange(e)}
+                        placeholder='mínima'
                     />
-                    {errors.height && (
-                        <p className='error'>{errors.height}</p>
+                    <input
+                        input= 'text'
+                        value= {input.heightMax}
+                        name= 'heightMax'
+                        onChange={(e)=>handleChange(e)}
+                        placeholder='máxima'
+                    />
+                    {errors.heightMin && (
+                        <p className='error'>{errors.heightMin}</p>
+                    )}
+                    {errors.heightMax && (
+                        <p className='error'>{errors.heightMax}</p>
                     )}
                 </div>
                 <div>
                     <label>Peso: </label>
                     <input
                         input= 'text'
-                        value= {input.weight}
-                        name= 'weight'
+                        value= {input.weightMin}
+                        name= 'weightMin'
                         onChange={(e)=>handleChange(e)}
+                        placeholder='mínimo'
                     />
-                    {errors.weight && (
-                        <p className='error'>{errors.weight}</p>
+                    <input
+                        input= 'text'
+                        value= {input.weightMax}
+                        name= 'weightMax'
+                        onChange={(e)=>handleChange(e)}
+                        placeholder='máximo'
+                    />
+                    {errors.weightMin && (
+                        <p className='error'>{errors.weightMin}</p>
                     )}
                 </div>
                 <div>
@@ -147,16 +179,17 @@ export default function CreateDog(){
                     />
                 </div>
                 <div>
-                    <label>Lifespan: </label>
+                    <label>Esperanza de vida: </label>
                     <input
                         input= 'text'
                         value= {input.lifespan}
                         name= 'lifespan'
                         onChange={(e)=>handleChange(e)}
+                        placeholder='años'
                     />
                 </div>
                 <div>
-                    <label>Temperament: </label>
+                    <label>Temperamentos: </label>
                     <input
                         input= 'text'
                         value= {input.temperaments}
@@ -178,7 +211,9 @@ export default function CreateDog(){
                     </div>
                     )
                 }
-                <button type='submit'> Crear Raza</button>
+                <button type='submit' disabled={
+                    !input.name || !input.heightMin || !input.heightMax || !input.weightMax || !input.weightMin || !input.image || !input.lifespan || !input.temperaments
+                    }> Crear Raza</button>
             </form>
         </div>
     )

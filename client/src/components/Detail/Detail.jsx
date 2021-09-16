@@ -10,7 +10,7 @@ export default function Detail(props){
 
     useEffect(() => {
         dispatch(getDetail(props.match.params.id))
-    }) // saque el dependency array [dispatch]
+    }, [dispatch]) // si saco el dependency array me hace infinitos req a la api [dispatch]
     
     const myDog = useSelector((state) => state.detail)
 
@@ -24,8 +24,7 @@ export default function Detail(props){
                     <h2>Weight: {myDog[0].weight} Kg</h2>
                     <h2>Height: {myDog[0].height} Mts</h2>
                     <h4>Temperaments: {myDog[0].temperaments.map(el => el +(', '))}</h4>
-                    {/* {console.log(myDog[0].temperaments)} */}
-                    <h4>Lifespan: {myDog[0].lifespan} years </h4>
+                    <h4>Lifespan: {myDog[0].lifespan} </h4>
                 </div> : <p>Loading ...</p>
             }
             <Link to= '/home'>
