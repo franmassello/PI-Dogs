@@ -98,12 +98,11 @@ export default function Home() {
                     </button>
                 </div>
             <div className='searchInput'>
-                <a>Buscar por nombre: </a>
                 <SearchBar/>
             </div>
                 <div className= "select-container">
                     <p>Temperamentos: </p>
-                    <select onChange={temperamentChange} /* onClick={temperamentChange} */>
+                    <select className='selectTemperaments'onChange={temperamentChange} /* onClick={temperamentChange} */>
                         <option value='All'>Todos</option>
                         {temperaments?.map((temp) => (
                             <option key= {temp.name} value={temp.name}>{temp.name}</option>
@@ -112,9 +111,9 @@ export default function Home() {
                 </div>
 
                 <div className= "p-select">
-                    <p>Ordenar alfabeticamente:</p>
                     <span>
-                        <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
+                    <p>Ordenar alfabeticamente:</p>
+                        <select className='selectOrderAlphabet' value={orderAlfabet} onChange= {alfabetSelectedChange}>
                             <option value= "asc-desc">Ascendente a descendente</option>
                             <option value= "desc-asc">Descendente a ascendente</option>
                         </select>
@@ -122,9 +121,9 @@ export default function Home() {
                 </div>
 
                 <div className= "p-select">
-                    <p>Ordenar por peso:</p>
                     <span>
-                        <select value= {peso} onChange= {pesoSelectedChange}>
+                    <p>Ordenar por peso:</p>
+                        <select className='selectOrderWeight' value= {peso} onChange= {pesoSelectedChange}>
                             <option value="liviano-pesado">Más liviano a más pesado</option>
                             <option value="pesado-liviano">Más pesado a más liviano</option>
                         </select>
@@ -132,9 +131,9 @@ export default function Home() {
                 </div>
 
                 <div className= "p-select">
+                <span>
                     <p>Ordenar por creado:</p>
-                    <span>
-                        <select onChange= {e =>handleFilterCreated(e)}>
+                        <select className='selectOrderCreated' onChange= {e =>handleFilterCreated(e)}>
                             <option value="All">Todos</option>
                             <option value="created">Web</option>
                             <option value="api">API</option>

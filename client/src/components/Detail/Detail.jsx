@@ -10,7 +10,7 @@ export default function Detail(props){
 
     useEffect(() => {
         dispatch(getDetail(props.match.params.id))
-    }, [dispatch]) // si saco el dependency array me hace infinitos req a la api [dispatch]
+    }) // si saco el dependency array me hace infinitos req a la api [dispatch]
     
     const myDog = useSelector((state) => state.detail)
 

@@ -45,13 +45,13 @@ const getAllDogs = async () => {        //This function will get all the dogs fr
   const apiData = await getApiInfo();
   const dbData = await getDbInfo();
   const dbTempFil = await dbData?.map((breed) => {
-    let { id, name, height, weight, life_span, image, createdInDb } = breed;
+    let { id, name, height, weight, lifespan, image, createdInDb } = breed;
     return {
       id,
       name,
       height,
       weight,
-      life_span,
+      lifespan,
       image,
       createdInDb,
       temperaments: breed.temperaments?.map((temp) => {
@@ -92,14 +92,18 @@ chargeTempApiToDb() // Charge the temps to the db
 
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name
-    let dogsTotal = await getAllDogs();
-    if(name){
-        let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
-        dogName.length ?
-        res.status(200).send(dogName) :
-        res.status(404).send('No existe el perro!')
-    } else {
-        res.status(200).send(dogsTotal)
+    try{
+      let dogsTotal = await getAllDogs();
+      if(name){
+          let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
+          dogName.length ?
+          res.status(200).send(dogName) :
+          res.status(404).send('No existe el perro!')
+      } else {
+          res.status(200).send(dogsTotal)
+      }
+    }catch(error){
+      console.log(error)
     }
 })
 
@@ -111,13 +115,13 @@ router.get('/temperament', async(req,res) =>{
 
 router.post('/dogs', (req, res, next) => {
     const element = req.body;
-    console.log(element)
+    /* console.log(element) */
     return Razas
       .create({
         ...element,
       })
       .then((breed) => {
-        breed.addTemperaments(element.temperaments);
+        breed.addTemperaments(element.temperaments);  // terminar de entender esto
       })
       .then((created) => {
         return res.json(created).send(created);
