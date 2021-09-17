@@ -5,6 +5,7 @@ import { getDogs, filterCreated, filterDogsByTemperament} from "../../actions/do
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
+import { Link } from 'react-router-dom'
 import { DOGS_URL_3000 } from "../../constants";
 import './Home.css'
 
@@ -154,23 +155,21 @@ export default function Home() {
                 }
                     ).map((dog) => { // antes estaba alldogs.map
                     return (
-                    <div key={dog.name} className='card'>
-                        <div className='card-body'>
-                        <img
-                            src={dog.img ? dog.img : dog.image}
-                            alt="IMG NOT FOUND"
-                            className='dogImage'
-                        />
-                        <h2 className='card-title'>{dog.name}</h2>
-                        <p className='card-description'>Temperamentos: {dog.temperaments?.map((temp)=>{return temp + ' '})}</p>    
-                        <p>Peso: {dog.weight}</p>
-                        
-                        
-                        <form action={DOGS_URL_3000+dog.id}>
-                            <input type='submit' value='Detalles'/>
-                        </form>
-                        </div>
-                    </div>
+                        <Link to={'/dogs/'+dog.id} className='linkTo'>
+                            <div key={dog.name} className='card'>
+                                    <img
+                                        src={dog.img ? dog.img : dog.image}
+                                        alt="IMG NOT FOUND"
+                                        className='dogImage'
+                                    />
+                                    <h2 className='card-title'>{dog.name}</h2>
+                                <div className='cardBody'>
+                                    
+                                    <p className='card-description'>Temperamentos: {dog.temperaments?.map((temp)=>{return temp + ' '})}</p>    
+                                    <p>Peso: {dog.weight}</p>
+                                </div>
+                            </div>
+                        </Link>
                     );
                 })}
                     </div>

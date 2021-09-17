@@ -55,7 +55,7 @@ body {
   color:#3e6cff
 }
 
-.h1Text {
+.h1Text1 {
   color: #3e6cff;
   font-weight: 900;
   font-size: 55px;
@@ -63,18 +63,18 @@ body {
 
 .button1 {
   border: 0;
-  background: none;
+  background: #3e6cff;
   display: block;
   margin: 5px auto;
   text-align: center;
-  border: 3px solid black;
   padding: 10px 25px;
   outline: none;
-  color: #3e6cff;
+  color: white;
   border-radius: 25px;
   transition: 0.45s;
   cursor: pointer;
   width: 100px;
+  
   
   /* text-decoration: none !important;
   pointer-events: none; */

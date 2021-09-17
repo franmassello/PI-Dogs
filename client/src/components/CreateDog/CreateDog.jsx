@@ -111,13 +111,21 @@ export default function CreateDog(){
     }, [dispatch]) // agregue dispatch entre [] por un bug
 
     return (
-        <div>
-            <Link to='/home'><button>Volver</button></Link>
-            <h1>Crea tu perro!</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <div>
+        <div className='mainDiv'>
+            <h1 className='h1Text'>Crea tu perro!</h1>
+            <form className='formSubmit'onSubmit={(e) => handleSubmit(e)}>
+                <div className='labels'>
                     <label>Nombre: </label>
+                    <label>Altura: </label>
+                    <label>Peso: </label>
+                    <label>Imagen: </label>
+                    <label>Esperanza de vida: </label>
+                    <label className='tempLabel'>Temperamentos: </label>
+                </div>
+                <div className='allInputs'>
+                <div>
                     <input
+                        className='inputName   '
                         input= 'text'
                         value= {input.name}
                         name= 'name'
@@ -129,11 +137,12 @@ export default function CreateDog(){
                 </div>
                 
                 <div>
-                <label>Altura: </label>
+
                     <input
                         input= 'text'
                         value= {input.heightMin}
                         name= 'heightMin'
+                        className='heightMin'
                         onChange={(e)=>handleChange(e)}
                         placeholder='mínima'
                     />
@@ -141,6 +150,7 @@ export default function CreateDog(){
                         input= 'text'
                         value= {input.heightMax}
                         name= 'heightMax'
+                        className='heightMax'
                         onChange={(e)=>handleChange(e)}
                         placeholder='máxima'
                     />
@@ -152,13 +162,13 @@ export default function CreateDog(){
                     )}
                 </div>
                 <div>
-                    <label>Peso: </label>
                     <input
                         input= 'text'
                         value= {input.weightMin}
                         name= 'weightMin'
                         onChange={(e)=>handleChange(e)}
                         placeholder='mínimo'
+                        className='pesoMin'
                     />
                     <input
                         input= 'text'
@@ -166,46 +176,52 @@ export default function CreateDog(){
                         name= 'weightMax'
                         onChange={(e)=>handleChange(e)}
                         placeholder='máximo'
+                        className='pesoMax'
                     />
                     {errors.weightMin && (
                         <p className='error'>{errors.weightMin}</p>
                     )}
                 </div>
                 <div>
-                    <label>Imagen: </label>
                     <input
                         input= 'text'
                         value= {input.image}
                         name= 'image'
                         onChange={(e)=>handleChange(e)}
+                        className='imageInput'
                     />
                 </div>
                 <div>
-                    <label>Esperanza de vida: </label>
                     <input
                         input= 'text'
                         value= {input.lifespan}
                         name= 'lifespan'
                         onChange={(e)=>handleChange(e)}
                         placeholder='años'
+                        className='lifespanInput'
                     />
                 </div>
-                <div>
-                    <label>Temperamentos: </label>
+                <div className='inputDiv'>
                     <input
                         input= 'text'
                         value= {input.temperaments}
                         name= 'temperaments'
                         size='70'
                         onChange={() => {}} //onChange vacio por bug
+                        className='inputTemps'
                     />
+                    
                 
-                <select onChange={handleSelect}>
+                <select onChange={handleSelect} onClick={handleDelete}>
                     {
                     temperaments.map((temp) => (
-                        <option key={temp.name} value={temp.name} name={temp.name}>{temp.name}</option>
+                        <option key={temp.name} value={temp.name} name={temp.name} >{temp.name}</option>
                         ))}
                 </select>
+                <button className='submitButton' type='submit' disabled={
+                    !input.name || !input.heightMin || !input.heightMax || !input.weightMax || !input.weightMin || !input.image || !input.lifespan || !input.temperaments
+                    }> Crear Raza</button>
+                
                 </div>
                 {input.temperaments.map(el =>
                     <div key={el} className='divTemp'>
@@ -213,10 +229,11 @@ export default function CreateDog(){
                     </div>
                     )
                 }
-                <button type='submit' disabled={
-                    !input.name || !input.heightMin || !input.heightMax || !input.weightMax || !input.weightMin || !input.image || !input.lifespan || !input.temperaments
-                    }> Crear Raza</button>
+                
+                
+                </div>
             </form>
+            
         </div>
     )
 

@@ -131,7 +131,7 @@ router.post('/dogs', (req, res, next) => {
 router.get('/dogs/id', async(req,res) =>{
     const id = req.params.idRaza
     const idQuery = req.query.id
-    console.log('idquery recibido', idQuery)
+    /* console.log('idquery recibido', idQuery) */
     let razasTotal = await getAllDogs()
     if(id){
         let dogId = await razasTotal.filter(el => el.id.toString() === id.toString()) //Antes estaba como parseInt

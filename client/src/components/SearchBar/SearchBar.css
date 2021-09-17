@@ -10,7 +10,7 @@
     margin-left: auto;
     text-align: center;
     border: 0;
-    background: none;
+    background: white;
     display: block;
     margin: 20px auto;
     border: 2px solid #3e6cff;
@@ -21,16 +21,20 @@
     transition: 0.45s;
     width: 160px;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #3e6cff;
+    opacity: 1; /* Firefox */
+  }
 
 .buttonInput{
     border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 20px auto;
     border: 2px solid #3e6cff;
     padding: 10px 3px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     cursor: pointer;
