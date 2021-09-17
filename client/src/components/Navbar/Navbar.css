@@ -1,16 +1,25 @@
 .navbar {
-    background-color: #3e6cff;
-    height: 60px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  background-color: #3e6cff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
   }
+
   .title{
     font-size: 2.5rem;
     color: white;
     margin: auto;
     width: 50%;
-    padding-right: 65px;
+    right: 100px;
+    text-decoration: none;
+    margin-left: 700px;
+  }
+  a {
+    text-decoration: none;
   }
   
   .menu-bars {

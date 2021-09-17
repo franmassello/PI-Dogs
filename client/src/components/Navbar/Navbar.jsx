@@ -18,7 +18,9 @@ function Navbar() {
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <p className='title'>WikiDogs</p>
+          <Link to= '/home'>
+            <a className='title'>WikiDogs</a>
+          </Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul key= 'nav-menu-items' className='nav-menu-items' onClick={showSidebar}>
