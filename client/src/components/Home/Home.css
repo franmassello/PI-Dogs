@@ -19,10 +19,15 @@
 
 .cardsContainer{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22rem, 16rem)); /* cards size */
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 12rem));
+    grid-gap: 2rem;
+    grid-gap: 2rem;
     gap: 2rem;
     justify-content: center;
-
+    margin-left: 15px;
+    margin-top: 27px;
+    margin-right: 13px;
+    margin-bottom: 28px;
 }
 .dogImage{
     height: 12rem;
@@ -30,9 +35,11 @@
     object-fit: cover;
 }
 .mainContainer{
-    background-color: white;
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
+    background-image: url(https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497);
+    background-size: 100vw 100vh;
+    height: 792px;
 }
 
 .resetButton {

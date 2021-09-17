@@ -142,11 +142,6 @@ export default function Home() {
                
             </div>
                 <div className='main'>
-                <Paginado
-                dogsPerPage= {dogsPerPage}
-                allDogs = {allDogs.length}
-                paginado = {paginado}
-                />
                 
                 <div className='cardsContainer'>
                 {currentDogs.filter((dog) => {
@@ -179,6 +174,11 @@ export default function Home() {
                     );
                 })}
                     </div>
+                    <Paginado
+                    dogsPerPage= {dogsPerPage}
+                    allDogs = {allDogs.length}
+                    paginado = {paginado}
+                    />
                 </div>
         </div>
     );
