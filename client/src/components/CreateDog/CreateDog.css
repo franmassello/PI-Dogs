@@ -2,3 +2,38 @@ input {
     text-align: center;
     width: max-content;
   }
+.mainDiv{
+  background-image: url(https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_28/1587661/dogs-age-years-kb-inline-200707.jpg);
+  height: 93vh;
+  background-size: 200vh;
+}
+
+/* .inputDiv{
+ margin-top: -26px;
+}  */
+.tempLabel{
+  margin-top: 33px;
+}
+
+.h1Text{
+  margin-left: -50px;
+}
+
+.allInputs{
+  height: 300px;
+}
+.submitButton{
+  border: 0;
+  background: #3e6cff;
+  margin: 20px auto;
+  border: 2px solid #3e6cff;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 25px;
+  transition: 0.45s;
+  cursor: pointer;
+  width: 150px;
+}
+.submitButton:hover{
+  background: green;
+}

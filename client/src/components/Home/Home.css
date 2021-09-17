@@ -2,18 +2,31 @@
     margin-left: auto;
     margin-right: auto;
 }
+.linkTo{
+    color: rgb(75, 74, 74);
+}
+.linkTo :hover{
+    transform: scale(1.04);
+}
 
 .card{
     overflow: hidden;
     box-shadow: 0 2px 20px #e1e5ee;
-    border-radius: 0.2rem;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
     transition: transform 200ms ease-in;
     background-color: white;
-
+    height: 300px;
+}
+.cardBody{
+    color: black;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 
@@ -32,8 +45,64 @@
 .dogImage{
     height: 12rem;
     width: 100%;
-    object-fit: cover;
+    object-fit: initial;
 }
+.inputName{
+    width: 282px;
+    height: 26px;
+}
+.heightMin{
+    height: 26px;
+}
+.heightMax{
+    height: 26px;
+}
+.pesoMin{
+    height: 26px;
+}
+.pesoMax{
+    height: 26px;
+}
+.imageInput{
+    height: 26px;
+    width: 282px;
+}
+.lifespanInput{
+    height: 26px;
+    width: 282px;
+}
+.inputTemps{
+    height: 26px;   
+}
+
+.labels{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    width: 200px;
+    justify-content: center;
+    padding-bottom: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.allInputs{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.formSubmit{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* align-content: center; */
+    justify-content: center;
+    align-items: left;
+
+}
+
 .mainContainer{
     display: flex;
     flex-direction: row;
@@ -44,13 +113,13 @@
 
 .resetButton {
     border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 20px auto;
     border: 2px solid #3e6cff;
     padding: 10px 20px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     cursor: pointer;
@@ -76,7 +145,6 @@
     min-width: 8rem;
     height: 50px;
     width: 200px;
-    flex:auto
 } 
 .main{
     width: 100%;
@@ -96,17 +164,13 @@
     flex-direction: column;   
 }
 .selectTemperaments{
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
-    border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 0px auto;
     border: 2px solid #3e6cff;
     padding: 5px 20px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     width: 210px;
@@ -117,13 +181,13 @@
     margin-left: auto;
     text-align: center;
     border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 0px auto;
     border: 2px solid #3e6cff;
     padding: 5px 10px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     width: 210px;
@@ -133,13 +197,13 @@
     margin-left: auto;
     text-align: center;
     border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 0px auto;
     border: 2px solid #3e6cff;
     padding: 5px 20px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     width: 210px;
@@ -149,13 +213,13 @@
     margin-left: auto;
     text-align: center;
     border: 0;
-    background: none;
+    background: #3e6cff;
     display: block;
     margin: 0px auto;
     border: 2px solid #3e6cff;
     padding: 5px 20px;
     outline: none;
-    color: #3e6cff;
+    color: white;
     border-radius: 25px;
     transition: 0.45s;
     width: 210px;

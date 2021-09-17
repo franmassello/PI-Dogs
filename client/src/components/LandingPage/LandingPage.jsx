@@ -30,7 +30,7 @@ export default function LandingPage(){
                 <div className='belowContainer'>
                     <h1 className='h1Text'>WikiDogs</h1>
                     <Link to='/home'>
-                        <button type='submit' className='button button1'>Ingresar</button>
+                        <button type='submit' className='button1'>Ingresar</button>
                     </Link>
                 </div>
         </div>
