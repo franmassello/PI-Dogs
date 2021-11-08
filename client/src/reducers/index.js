@@ -1,4 +1,3 @@
-import { GET_DOGS, GET_DOGS_BREED } from '../actions/dogActions'
 let initialState = {
     dogs: [],
     allDogs: [],
@@ -9,13 +8,13 @@ let initialState = {
 export default function reducer (state = initialState, action) {
     const {type, payload} = action
     switch(type){
-        case GET_DOGS:
+        case 'GET_DOGS':
             return {
                 ...state,
                 dogs: payload,
                 allDogs: action.payload
             }
-        case GET_DOGS_BREED:
+        case 'GET_DOGS_BREED':
             return {
                 ...state,
                 dogs: action.payload

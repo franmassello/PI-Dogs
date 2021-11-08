@@ -18,11 +18,13 @@ function Navbar() {
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <p className='title'>WikiDogs</p>
+          <Link to= '/home'>
+            <a className='title'>WikiDogs</a>
+          </Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul key= 'hola' className='nav-menu-items' onClick={showSidebar}>
-            <li key= 'hola' className='navbar-toggle'>
+          <ul key= 'nav-menu-items' className='nav-menu-items' onClick={showSidebar}>
+            <li key= 'navbar-toggle' className='navbar-toggle'>
               <Link to='#' className='menu-bars'>
                 <AiIcons.AiOutlineClose />
               </Link>
