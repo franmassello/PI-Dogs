@@ -21,7 +21,7 @@ export default function Home() {
     const indexOfLastDog = currentPage * dogsPerPage // pos es 8
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
-
+    
     const [ searchTerm ] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
@@ -150,6 +150,7 @@ export default function Home() {
                         return dog
                     } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
                         return dog
+
                     } 
                     return false // agregue este return por un bug
                 }

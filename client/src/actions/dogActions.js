@@ -3,6 +3,7 @@ import {DOGS_URL1, DOGS_URL, GETDOGS_URL, POSTDOG_URL, GETTEMPERAMENT_URL } from
 /* export const GET_DOGS = 'GET_ DOGS' */
 /* export const GET_DOGS_BREED = 'GET_DOGS_BREED'*/
 /* export const SORT_BREEDS = 'SORT_BREEDS'  */
+
 export const ASD = 'Razas-A-Z';
 export const DES = 'Razas-Z-A';
 
@@ -35,7 +36,6 @@ export function filterDogsByTemperament(payload){
 
 export function postDog(payload){
     return async function (dispatch){
-        /* console.log(Object.keys(payload)) */
         const response = await axios.post(POSTDOG_URL,payload)
         //console.log(response)
         return response
@@ -119,7 +119,6 @@ export function getDetail(id) {
                 type: 'GET_DETAILS',
                 payload: json.data
             })
-            
         }catch(error){
             console.log(error)
         }

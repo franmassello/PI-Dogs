@@ -50,7 +50,7 @@ export default function CreateDog(){
     })
 
     function handleChange(e) {
-        
+
         setInput({
             ...input,
             [e.target.name] : e.target.value
@@ -135,7 +135,6 @@ export default function CreateDog(){
                         <p className='error'>{errors.name}</p>
                     )}
                 </div>
-                
                 <div>
 
                     <input

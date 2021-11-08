@@ -83,6 +83,7 @@ const chargeTempApiToDb = async () => {   // This function will make a get reque
     });
   };
 
+
 chargeTempApiToDb() // Charge the temps to the db when script is runned
 
 //-------------------------------------------
@@ -115,7 +116,6 @@ router.get('/temperament', async(req,res) =>{
 
 router.post('/dogs', (req, res, next) => {
     const element = req.body;
-    /* console.log(element) */
     return Razas
       .create({
         ...element,
