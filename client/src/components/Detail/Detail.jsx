@@ -3,34 +3,36 @@ import { Link } from 'react-router-dom';
 import { getDetail } from '../../actions/dogActions'; // Falta el get temperaments
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from 'react';
+import './Detail.css'
 
 export default function Detail(props){
-    console.log(props)
+    /* console.log(props) */
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getDetail(props.match.params.id))
-    },[dispatch])
+    },[]) // si saco el dependency array me hace infinitos req a la api cuando voy a ver los detalles[dispatch]
     
     const myDog = useSelector((state) => state.detail)
 
+    var linkBackground = 'https://diarioconvos.com/wp-content/uploads/2021/07/perro.jpg'
+
     return (
-        <div>
+        <div className='component'>
             {
                 myDog.length >0 ?
-                <div>
-                    <h1>{myDog[0].name}</h1>
-                    <img src={myDog[0].img? myDog[0].img: myDog[0].image} alt='' width='400px' height='300px'/>
-                    <h2>Weight: {myDog[0].weight} Kg</h2>
-                    <h2>Height: {myDog[0].height} Mts</h2>
-                    <h4>Temperaments: {myDog[0].temperaments.map(el => el +(', '))}</h4>
-                    {/* {console.log(myDog[0].temperaments)} */}
-                    <h4>Lifespan: {myDog[0].lifespan} years </h4>
+                <div className='dogDetailContainer'>
+                    <img className='dogImageDetails' src={myDog[0].img? myDog[0].img: myDog[0].image} alt='' width='400px' height='300px'/>
+                        <div className='dogData'>
+                            <h2>Raza: {myDog[0].name}</h2>
+                            <h2>Weight: {myDog[0].weight} Kg</h2>
+                            <h2>Height: {myDog[0].height} Mts</h2>
+                            <h2>Temperaments: {myDog[0].temperaments.map(el => el +(', '))}</h2>
+                            <h2>Lifespan: {myDog[0].lifespan} </h2>
+                        </div>
                 </div> : <p>Loading ...</p>
             }
-            <Link to= '/home'>
-                <button>Volver</button>
-            </Link>
+            
         </div>
     )
 }

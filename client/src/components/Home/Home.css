@@ -1,23 +1,227 @@
+
+.Home{
+    margin-left: auto;
+    margin-right: auto;
+}
+.linkTo{
+    color: rgb(75, 74, 74);
+}
+.linkTo :hover{
+    transform: scale(1.04);
+}
+
 .card{
     overflow: hidden;
     box-shadow: 0 2px 20px #e1e5ee;
-    border-radius: 0.2rem;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
     transition: transform 200ms ease-in;
+    background-color: white;
+    height: 300px;
+}
+.cardBody{
+    color: black;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 
 .cardsContainer{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 16rem));
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 12rem));
+    grid-gap: 2rem;
+    grid-gap: 2rem;
     gap: 2rem;
     justify-content: center;
+    margin-left: 15px;
+    margin-top: 27px;
+    margin-right: 13px;
+    margin-bottom: 28px;
 }
 .dogImage{
     height: 12rem;
     width: 100%;
-    object-fit: cover;
+    object-fit: initial;
+}
+.inputName{
+    width: 282px;
+    height: 26px;
+}
+.heightMin{
+    height: 26px;
+}
+.heightMax{
+    height: 26px;
+}
+.pesoMin{
+    height: 26px;
+}
+.pesoMax{
+    height: 26px;
+}
+.imageInput{
+    height: 26px;
+    width: 282px;
+}
+.lifespanInput{
+    height: 26px;
+    width: 282px;
+}
+.inputTemps{
+    height: 26px;   
+}
+
+.labels{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    width: 200px;
+    justify-content: center;
+    padding-bottom: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.allInputs{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.formSubmit{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* align-content: center; */
+    justify-content: center;
+    align-items: left;
+
+}
+
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+    background-image: url(https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497);
+    background-size: 100vw 100vh;
+    height: 792px;
+}
+
+.resetButton {
+    border: 0;
+    background: #3e6cff;
+    display: block;
+    margin: 20px auto;
+    border: 2px solid #3e6cff;
+    padding: 10px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.45s;
+    cursor: pointer;
+    width: 150px;
+}
+.resetButton:hover {
+    background: red;
+  }
+
+.buttonContainer{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+    flex:auto
+} 
+.select-container{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+    flex:auto
+} 
+.p-select{
+    min-width: 8rem;
+    height: 50px;
+    width: 200px;
+} 
+.main{
+    width: 100%;
+    clear:both;
+    position:relative;
+    right: 0px;
+}
+
+.allButtonContainer{
+    width: 200px;
+    padding-right: 200px;
+}
+
+.searchInput{
+    width: 200px;
+    display: flex;
+    flex-direction: column;   
+}
+.selectTemperaments{
+    background: #3e6cff;
+    display: block;
+    margin: 0px auto;
+    border: 2px solid #3e6cff;
+    padding: 5px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.45s;
+    width: 210px;
+}
+
+.selectOrderAlphabet{
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    border: 0;
+    background: #3e6cff;
+    display: block;
+    margin: 0px auto;
+    border: 2px solid #3e6cff;
+    padding: 5px 10px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.45s;
+    width: 210px;
+}
+.selectOrderWeight{
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    border: 0;
+    background: #3e6cff;
+    display: block;
+    margin: 0px auto;
+    border: 2px solid #3e6cff;
+    padding: 5px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.45s;
+    width: 210px;
+}
+.selectOrderCreated{
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    border: 0;
+    background: #3e6cff;
+    display: block;
+    margin: 0px auto;
+    border: 2px solid #3e6cff;
+    padding: 5px 20px;
+    outline: none;
+    color: white;
+    border-radius: 25px;
+    transition: 0.45s;
+    width: 210px;
 }
