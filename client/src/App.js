@@ -13,14 +13,15 @@ function App() {  // Main file, here i define all the routes in my webapp, and t
     <BrowserRouter>
         <Switch>
           <Route exact path='/' component={LandingPage}/>
-          <div className="App">
-            <Navbar />
-          <Route exact path='/home' component={Home}/>
-          <Route exact path='/dogs' component={CreateDog}/>
-          <Route exact path='/dogs/:id' component={Detail}/>
-          </div>
+          <>
+            <Navbar/>
+            <Route exact path='/home' component={Home}/>
+            <Route exact path='/dogs' component={CreateDog}/>
+            <Route exact path='/dogs/:id' component={Detail}/>
+          </>
         </Switch>
-        <React.Fragment/> {/* React does not recognize the `computedMatch` prop on a DOM element. Este bug me tiraba si no ponia react fragment*/}
+        <React.Fragment/>
+        {/* <React.Fragment/> */} {/* React does not recognize the `computedMatch` prop on a DOM element. Este bug me tiraba si no ponia react fragment*/}
     </BrowserRouter>
   );
 }

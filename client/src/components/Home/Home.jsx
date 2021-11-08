@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { getDogs, filterCreated, filterDogsByTemperament} from "../../actions/dogActions";
 import Paginado from "../Paginado/Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import axios from "axios"
+import { Link } from 'react-router-dom'
 import { DOGS_URL_3000 } from "../../constants";
 import './Home.css'
 
@@ -21,20 +21,10 @@ export default function Home() {
     const indexOfLastDog = currentPage * dogsPerPage // pos es 8
     const indexOfFirstDog = indexOfLastDog - dogsPerPage
     const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
-
-    /* const [ input, setInput] = useState({
-        name: '',
-        height: '',
-        weight: '',
-        image: '',
-        lifespan: '',
-        temperament:[]
-    }) */
-
+    
     const [ searchTerm ] = useState('')
 
     const temperaments = useSelector((state) => state.temperaments);
-    const [ temperamentSelected] = useState("")
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -42,7 +32,7 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(getDogs());
-    }, []);
+    }, [dispatch]); // agregue dispatch entre [] por un bug
 
     useEffect(() => {
         axios.get(`http://localhost:3001/temperament`) 
@@ -55,7 +45,7 @@ export default function Home() {
         .catch((error) => {
         console.log(error);
     });        
-    }, [])
+    }, [dispatch]) // agregue dispatch entre [] por un bug
 
     function handleClick(e) {
         e.preventDefault();
@@ -97,77 +87,62 @@ export default function Home() {
     function handleFilterCreated(e){
         dispatch(filterCreated(e.target.value))
     }
-
-    /* function handleSelect(e) {
-        setInput({
-            ...input,
-            temperament: [...input.temperament, e.target.value]
-        })
-    } */
-
-    /* function handleDelete(el){
-        setInput({
-            ...input,
-            temperament: input.temperament.filter( temp => temp !== el)
-        })
-    }
- */
+    
     return (
-        <div>
+        <div className='mainContainer'>
             <br></br>
-            <button onClick={(e) => {handleClick(e);}}>
-                Reiniciar filtros
-            </button>
-
-            <div>
+            <div className='allButtonContainer'>
+                <div className='buttonContainer'>
+                    <button className='resetButton' onClick={(e) => {handleClick(e);}}>
+                        Reiniciar filtros
+                    </button>
+                </div>
+            <div className='searchInput'>
+                <SearchBar/>
+            </div>
                 <div className= "select-container">
-                    <div>
-                        <label>Temperamentos: </label>
-                        <select onChange={temperamentChange} /* onClick={temperamentChange} */>
-                            <option value='All'>Todos</option>
-                            {temperaments?.map((temp) => (
-                                <option key= {temp.name} value={temp.name}>{temp.name}</option>
-                                ))}
-                        </select>
-                        
-                    </div>
+                    <p>Temperamentos: </p>
+                    <select className='selectTemperaments'onChange={temperamentChange} /* onClick={temperamentChange} */>
+                        <option value='All'>Todos</option>
+                        {temperaments?.map((temp) => (
+                            <option key= {temp.name} value={temp.name}>{temp.name}</option>
+                            ))}
+                    </select>
                 </div>
 
-                <p className= "p-select">Ordenar alfabeticamente:
+                <div className= "p-select">
                     <span>
-                        <select value={orderAlfabet} onChange= {alfabetSelectedChange}>
+                    <p>Ordenar alfabeticamente:</p>
+                        <select className='selectOrderAlphabet' value={orderAlfabet} onChange= {alfabetSelectedChange}>
                             <option value= "asc-desc">Ascendente a descendente</option>
                             <option value= "desc-asc">Descendente a ascendente</option>
                         </select>
                     </span>
-                </p>
+                </div>
 
-                <p className= "p-select">Ordenar por peso:
+                <div className= "p-select">
                     <span>
-                        <select value= {peso} onChange= {pesoSelectedChange}>
+                    <p>Ordenar por peso:</p>
+                        <select className='selectOrderWeight' value= {peso} onChange= {pesoSelectedChange}>
                             <option value="liviano-pesado">Más liviano a más pesado</option>
                             <option value="pesado-liviano">Más pesado a más liviano</option>
                         </select>
                     </span>
-                </p>
+                </div>
 
-                <p className= "p-select">Ordenar por creado:
-                    <span>
-                        <select onChange= {e =>handleFilterCreated(e)}>
+                <div className= "p-select">
+                <span>
+                    <p>Ordenar por creado:</p>
+                        <select className='selectOrderCreated' onChange= {e =>handleFilterCreated(e)}>
                             <option value="All">Todos</option>
                             <option value="created">Web</option>
                             <option value="api">API</option>
                         </select>
                     </span>
-                </p>
-                
-                <div>
-                <SearchBar/>
-                <Paginado
-                dogsPerPage= {dogsPerPage}
-                allDogs = {allDogs.length}
-                paginado = {paginado}
-                />
+                </div>
+               
+            </div>
+                <div className='main'>
                 
                 <div className='cardsContainer'>
                 {currentDogs.filter((dog) => {
@@ -175,34 +150,36 @@ export default function Home() {
                         return dog
                     } else if (dog.name.toLowerCase().includes(searchTerm.toLowerCase())){
                         return dog
-                    } else if (temperamentSelected){
-                        console.log(temperamentSelected)
-                    }
+
+                    } 
+                    return false // agregue este return por un bug
                 }
                     ).map((dog) => { // antes estaba alldogs.map
                     return (
-                    <div key={dog.name} className='card'>
-                        <div className='card-body'>
-                        <img
-                            src={dog.img ? dog.img : dog.image}
-                            alt="IMG NOT FOUND"
-                            className='dogImage'
-                        />
-                        <h2 className='card-title'>{dog.name}</h2>
-                        <p className='card-description'>Temperamentos: {dog.temperaments?.map((temp)=>{return temp + ' '})}</p>    
-                        <p>Peso: {dog.weight}</p>
-                        
-                        
-                        <form action={DOGS_URL_3000+dog.id}>
-                            <input type='submit' value='Detalles'/>
-                        </form>
-                        </div>
-                    </div>
+                        <Link to={'/dogs/'+dog.id} className='linkTo'>
+                            <div key={dog.name} className='card'>
+                                    <img
+                                        src={dog.img ? dog.img : dog.image}
+                                        alt="IMG NOT FOUND"
+                                        className='dogImage'
+                                    />
+                                    <h2 className='card-title'>{dog.name}</h2>
+                                <div className='cardBody'>
+                                    
+                                    <p className='card-description'>Temperamentos: {dog.temperaments?.map((temp)=>{return temp + ' '})}</p>    
+                                    <p>Peso: {dog.weight}</p>
+                                </div>
+                            </div>
+                        </Link>
                     );
                 })}
                     </div>
+                    <Paginado
+                    dogsPerPage= {dogsPerPage}
+                    allDogs = {allDogs.length}
+                    paginado = {paginado}
+                    />
                 </div>
-            </div>
         </div>
     );
     

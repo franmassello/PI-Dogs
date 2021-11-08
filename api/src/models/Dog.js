@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     height: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     weight:{
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: false
     },
     image:{
@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
     },
     lifespan:{
       type: DataTypes.STRING,
-      defaultValue: '0',
+      defaultValue: null,
       allowNull: true
     },
     createdInDb:{  // Por si se quiere llamar a todo lo que se creo en base de datos

@@ -45,13 +45,13 @@ const getAllDogs = async () => {        //This function will get all the dogs fr
   const apiData = await getApiInfo();
   const dbData = await getDbInfo();
   const dbTempFil = await dbData?.map((breed) => {
-    let { id, name, height, weight, life_span, image, createdInDb } = breed;
+    let { id, name, height, weight, lifespan, image, createdInDb } = breed;
     return {
       id,
       name,
       height,
       weight,
-      life_span,
+      lifespan,
       image,
       createdInDb,
       temperaments: breed.temperaments?.map((temp) => {
@@ -83,7 +83,8 @@ const chargeTempApiToDb = async () => {   // This function will make a get reque
     });
   };
 
-chargeTempApiToDb() // Charge the temps to the db
+
+chargeTempApiToDb() // Charge the temps to the db when script is runned
 
 //-------------------------------------------
 
@@ -92,14 +93,18 @@ chargeTempApiToDb() // Charge the temps to the db
 
 router.get('/dogs', async(req,res) =>{
     const name = req.query.name
-    let dogsTotal = await getAllDogs();
-    if(name){
-        let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
-        dogName.length ?
-        res.status(200).send(dogName) :
-        res.status(404).send('No existe el perro!')
-    } else {
-        res.status(200).send(dogsTotal)
+    try{
+      let dogsTotal = await getAllDogs();
+      if(name){
+          let dogName = await dogsTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()))
+          dogName.length ?
+          res.status(200).send(dogName) :
+          res.status(404).send('No existe el perro!')
+      } else {
+          res.status(200).send(dogsTotal)
+      }
+    }catch(error){
+      console.log(error)
     }
 })
 
@@ -111,27 +116,32 @@ router.get('/temperament', async(req,res) =>{
 
 router.post('/dogs', (req, res, next) => {
     const element = req.body;
-    console.log(element)
     return Razas
       .create({
         ...element,
       })
       .then((breed) => {
-        breed.addTemperaments(element.temperaments);
+        breed.addTemperaments(element.temperaments);  // terminar de entender esto
       })
       .then((created) => {
         return res.json(created).send(created);
       });
   })
 
-router.get('/dogs/:idRaza', async(req,res) =>{
+router.get('/dogs/id', async(req,res) =>{
     const id = req.params.idRaza
+    const idQuery = req.query.id
+    /* console.log('idquery recibido', idQuery) */
     let razasTotal = await getAllDogs()
-    //console.log(razasTotal)
     if(id){
         let dogId = await razasTotal.filter(el => el.id.toString() === id.toString()) //Antes estaba como parseInt
         dogId.length?
         res.status(200).send(dogId) :
+        res.status(404).send('No se ha encontrado el perro!')
+    } else if (idQuery){
+        let dogId1 = await razasTotal.filter(el => el.id?.toString() === idQuery?.toString()) //Antes estaba como parseInt
+        dogId1.length?
+        res.status(200).send(dogId1) :
         res.status(404).send('No se ha encontrado el perro!')
     }
 }) 
